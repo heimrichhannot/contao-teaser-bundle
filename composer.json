@@ -1,0 +1,40 @@
+{
+  "name": "heimrichhannot/contao-teaser-bundle",
+  "description": "A contao teaser content element, that provides the ability to link the element with pages, articles, files, downloads or external urls.",
+  "keywords": [
+    "contao",
+    "teaser",
+    "content",
+    "element"
+  ],
+  "type": "contao-bundle",
+  "homepage": "https://github.com/heimrichhannot/contao-teaser-bundle",
+  "license": "LGPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Heimrich & Hannot",
+      "email": "digitales@heimrich-hannot.de",
+      "homepage": "http://www.heimrich-hannot.de",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/heimrichhannot/contao-teaser-bundle/issues"
+  },
+  "require": {
+    "php": "~7.1",
+    "contao/core-bundle": "~4.4",
+    "heimrichhannot/contao-utils-bundle": "^2.28"
+  },
+  "autoload": {
+    "psr-4": {
+      "HeimrichHannot\\ContaoTeaserBundle\\": "src/"
+    }
+  },
+  "replace": {
+    "heimrichhannot/contao-teaser": "*"
+  },
+  "extra": {
+    "contao-manager-plugin": "HeimrichHannot\\ContaoTeaserBundle\\ContaoManager\\Plugin"
+  }
+}
