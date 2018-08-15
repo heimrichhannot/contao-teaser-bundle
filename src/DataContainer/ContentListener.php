@@ -9,7 +9,7 @@
  */
 
 
-namespace HeimrichHannot\ContaoTeaserBundle\EventListener\DataContainer;
+namespace HeimrichHannot\ContaoTeaserBundle\DataContainer;
 
 
 use Contao\Backend;

@@ -17,9 +17,11 @@ use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Config\ConfigInterface;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
+use Contao\ManagerPlugin\Config\ConfigPluginInterface;
 use HeimrichHannot\ContaoTeaserBundle\HeimrichHannotContaoTeaserBundle;
+use Symfony\Component\Config\Loader\LoaderInterface;
 
-class Plugin implements BundlePluginInterface
+class Plugin implements BundlePluginInterface, ConfigPluginInterface
 {
 
     /**
@@ -33,5 +35,14 @@ class Plugin implements BundlePluginInterface
             BundleConfig::create(HeimrichHannotContaoTeaserBundle::class)
                 ->setLoadAfter([ContaoCoreBundle::class]),
         ];
+    }
+
+    /**
+     * Allows a plugin to load container configuration.
+     * @throws \Exception
+     */
+    public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig)
+    {
+        $loader->load('@HeimrichHannotContaoTeaserBundle/Resources/config/services.yml');
     }
 }

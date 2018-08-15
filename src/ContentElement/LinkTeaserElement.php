@@ -100,12 +100,10 @@ class LinkTeaserElement extends ContentText
         // HOOK: extend teaser link by callback functions
         if (isset($GLOBALS['TL_HOOKS']['generateTeaserLink']) && is_array($GLOBALS['TL_HOOKS']['generateTeaserLink']))
         {
-            $showMore = false;
             foreach ($GLOBALS['TL_HOOKS']['generateTeaserLink'] as $callback)
             {
-                $showMore = System::importStatic($callback[0])->{$callback[1]}($this, $showMore);
+                $showMore = System::importStatic($callback[0])->{$callback[1]}($this, $this->showMore);
             }
-
             $this->showMore = $showMore;
         }
 

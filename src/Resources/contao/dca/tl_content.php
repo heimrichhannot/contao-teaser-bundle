@@ -20,15 +20,15 @@ array_insert($dc['palettes']['__selector__'], 0, 'source');
 /**
  * Palettes
  */
-$dc['palettes']['linkteaser'] = '
-								{type_legend},type,headline;
-								{teaser_legend},source,teaserLinkText,teaserLinkCssClass,teaserLinkBehaviour,teaserContentTemplate;
-								{text_legend},text;
-								{image_legend},addImage;
-								{template_legend:hide},customTpl;
-								{protected_legend:hide},protected;
-								{expert_legend:hide},guests,cssID,space;
-								{invisible_legend:hide},invisible,start,stop';
+$dc['palettes'][\HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement::TYPE] =
+    '{type_legend},type,headline;
+    {teaser_legend},source,teaserLinkText,teaserLinkCssClass,teaserLinkBehaviour,teaserContentTemplate;
+    {text_legend},text;
+    {image_legend},addImage;
+    {template_legend:hide},customTpl;
+    {protected_legend:hide},protected;
+    {expert_legend:hide},guests,cssID,space;
+    {invisible_legend:hide},invisible,start,stop';
 
 /**
  * Subpalettes

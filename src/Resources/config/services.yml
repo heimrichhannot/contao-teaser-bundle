@@ -4,10 +4,6 @@ services:
 
 # Listener
 
-  huh.teaser.listener.hook:
-    class: HeimrichHannot\ContaoTeaserBundle\EventListener\ContaoHooksListener
-    public: true
-
   huh.teaser.listener.dc.content:
-    class: HeimrichHannot\ContaoTeaserBundle\EventListener\DataContainer\ContentListener
+    class: HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener
     public: true
