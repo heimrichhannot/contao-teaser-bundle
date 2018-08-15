@@ -1,4 +1,4 @@
-# Contao Teaser
+# Contao Teaser Bundle
 
 Teaser is a contao content element, that provides the ability to link the element with pages, articles, files, downloads and external urls.
 Can be used as replacement for ce_page_teaser. 
@@ -10,35 +10,20 @@ Can be used as replacement for ce_page_teaser.
 * Hide more link, link entire element.
 * Overwrite content template
 
-![alt privacy modal](./docs/img/teaser-preview.jpg)
+![Teaser Frontend](docs/img/contao-teaser-bundle_screenshot_frontend.png)
+
+![Teaser Backend](docs/img/contao-teaser-bundle_screenshot_backend.png)
     
-    
-### Content elements
+## Extend
 
-Name | Description
----- | -----------
-HeimrichHannot\Teaser\ContentLinkTeaser | The content element, that provides the teaser settings.
+### Templates
 
-### Fields
-
-tl_content:
-
-Name | Description
----- | -----------
-source | Radio button, to select the source type. (page, article, link, download, external url)
-jumpTo | The page id, from tl_page, where to jump to.
-articleId | The article id, from tl_article, where to jump to.
-fileSRC | The file source uuid, from tl_files (required by link and download sources).
-teaserLinkText | A dropdown the link text can be selected from.
-teaserLinkCssClass | A text field, to put in the css class for the link element.
-teaserLinkBehaviour | A dropdown to select the link behaviour from.
-teaserContentTemplate | Overwrite the teaser content template.
-
+* Element template prefix: `ce_linkteaser_`.
+* Image template prefix: `linkteaser_content_image_`.
 
 ### Hooks
 
-
 Name | Arguments | Expected return value | Description
 ---- | --------- | --------------------- | -----------
-generateTeaserLink | $objElement, $showMore | $showMore | Add custom teaser source and modify the content element.
-getContentSourceOptions | $arrOptions, $dc | $arrOptions | Add custom source options to the dca.
+generateTeaserLink | $element: LinkTeaserElement, $showMore: bool | $showMore: bool | Add custom teaser source and modify the content element. 
+getContentSourceOptions | $options: array, $dc: DataContainer | $options: array | Add custom source options to the dca.
