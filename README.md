@@ -13,7 +13,23 @@ Can be used as replacement for ce_page_teaser.
 ![Teaser Frontend](docs/img/contao-teaser-bundle_screenshot_frontend.png)
 
 ![Teaser Backend](docs/img/contao-teaser-bundle_screenshot_backend.png)
-    
+
+## Usage
+
+### Install
+	
+Prerequisites:
+* Contao ^4.4 Managed edition
+* PHP ^7.1
+
+Install with composer:
+
+```
+composer require heimrichhannot/contao-teaser-bundle
+```
+Update the database afterwards.
+
+
 ## Extend
 
 ### Templates
