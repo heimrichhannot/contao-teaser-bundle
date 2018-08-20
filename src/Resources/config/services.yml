@@ -1,9 +1,9 @@
 services:
-  _defaults:
-    autowire: true
 
 # Listener
 
   huh.teaser.listener.dc.content:
     class: HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener
     public: true
+    arguments:
+      ['@contao.framework']

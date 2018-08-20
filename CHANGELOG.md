@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.3] - 2018-08-20
+
+#### Fixed
+* Contao 4.5 compatibility
+
 ## [0.1.2] - 2018-08-20
 
 #### Fixed
