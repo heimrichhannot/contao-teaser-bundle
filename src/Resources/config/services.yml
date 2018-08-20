@@ -7,6 +7,3 @@ services:
   huh.teaser.listener.dc.content:
     class: HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener
     public: true
-
-  huh:
-    class: HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement
