@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2018-09-04
+
+#### Added
+* `rel="noopener"` for target="_blank" links (see: https://developers.google.com/web/tools/lighthouse/audits/noopener for more information)
+
 ## [0.1.3] - 2018-08-20
 
 #### Fixed
