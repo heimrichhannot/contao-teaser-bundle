@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.2.1] - 2018-09-11
+
+#### Fixed
+* issue #3: `ContentListener` did not get `ContaoFrameworkInterface` invoked
+
 ## [0.2.0] - 2018-09-04
 
 #### Added

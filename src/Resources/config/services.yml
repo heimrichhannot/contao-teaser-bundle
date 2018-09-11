@@ -1,9 +1,8 @@
 services:
-
-# Listener
-
+  _instanceof:
+    Contao\CoreBundle\Framework\FrameworkAwareInterface:
+      calls:
+      - ["setFramework", ["@contao.framework"]]
   huh.teaser.listener.dc.content:
     class: HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener
     public: true
-    arguments:
-      ['@contao.framework']
