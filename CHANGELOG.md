@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2018-03-14
+
+#### Changed
+* linkTitle in LinkTeaserElement is now pageTitle if set
+
+### Fixed
+* removed some deprecation warnings
+* removed unused imports
+
 ## [0.2.1] - 2018-09-11
 
 #### Fixed

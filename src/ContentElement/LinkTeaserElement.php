@@ -226,7 +226,7 @@ class LinkTeaserElement extends ContentText
             $this->setHref(str_replace($objTarget->alias, '', $this->getHref()));
         }
 
-        $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['pageTitle'], $objTarget->title));
+        $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['pageTitle'], $objTarget->pageTitle ?: $objTarget->title));
         $this->setLink(sprintf($this->getLink(), $objTarget->title));
 
 
@@ -282,7 +282,7 @@ class LinkTeaserElement extends ContentText
             return false;
         }
 
-        $allowedDownload = trimsplit(',', strtolower(Config::get('allowedDownload')));
+        $allowedDownload = StringUtil::trimsplit(',', strtolower(Config::get('allowedDownload')));
 
         // Return if the file type is not allowed
         if (!in_array($objFile->extension, $allowedDownload) || preg_match('/^meta(_[a-z]{2})?\.txt$/', $objFile->basename))
@@ -404,7 +404,7 @@ class LinkTeaserElement extends ContentText
         // Use the file name as title if none is given
         if ($arrMeta['title'] == '')
         {
-            $arrMeta['title'] = specialchars($objFile->basename);
+            $arrMeta['title'] = StringUtil::specialchars($objFile->basename);
         }
 
         return $arrMeta;
@@ -425,7 +425,7 @@ class LinkTeaserElement extends ContentText
             return $strHref;
         }
 
-        $arrTag = trimsplit('::', str_replace(array('{{', '}}'), '', $strHref));
+        $arrTag = StringUtil::trimsplit('::', str_replace(array('{{', '}}'), '', $strHref));
 
         if (empty($arrTag) || $arrTag[0] == '' || $arrTag[1] == '')
         {
@@ -531,7 +531,7 @@ class LinkTeaserElement extends ContentText
         // set from string
         if (!is_array($arrData))
         {
-            $arrData = trimsplit($delimiter, $arrData);
+            $arrData = StringUtil::trimsplit($delimiter, $arrData);
 
             if (is_array($arrData))
             {

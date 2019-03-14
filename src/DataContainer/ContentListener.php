@@ -16,7 +16,6 @@ use Contao\Backend;
 use Contao\BackendUser;
 use Contao\Config;
 use Contao\ContentModel;
-use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
 use Contao\CoreBundle\Framework\FrameworkAwareInterface;
 use Contao\CoreBundle\Framework\FrameworkAwareTrait;
 use Contao\Database;

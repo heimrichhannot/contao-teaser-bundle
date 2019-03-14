@@ -27,6 +27,8 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
     /**
      * Gets a list of autoload configurations for this bundle.
      *
+     * @param ParserInterface $parser
+     *
      * @return ConfigInterface[]
      */
     public function getBundles(ParserInterface $parser)
@@ -39,6 +41,10 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
 
     /**
      * Allows a plugin to load container configuration.
+     *
+     * @param LoaderInterface $loader
+     * @param array           $managerConfig
+     *
      * @throws \Exception
      */
     public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig)
