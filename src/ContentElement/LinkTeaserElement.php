@@ -75,19 +75,15 @@ class LinkTeaserElement extends ContentText
         switch ($this->source)
         {
             case 'page':
-                $this->target   = false; // overwrite target
                 $this->showMore = $this->handlePage();
                 break;
             case 'file':
-                $this->target   = true; // overwrite target, alway open in new window
                 $this->showMore = $this->handleFile();
                 break;
             case 'download':
-                $this->target   = false; // overwrite target
                 $this->showMore = $this->handleDownload();
                 break;
             case 'article':
-                $this->target   = false; // overwrite target
                 $this->showMore = $this->handleArticle();
                 break;
             case 'external':

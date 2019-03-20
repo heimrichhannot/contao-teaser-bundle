@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.3.2] - 2018-03-20
+
+#### Changed
+* enable `target="_blank"` for all link types
+
 ## [0.3.1] - 2018-03-19
 
 #### Changed

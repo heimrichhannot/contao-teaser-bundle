@@ -22,7 +22,7 @@ array_insert($dc['palettes']['__selector__'], 0, 'source');
  */
 $dc['palettes'][\HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement::TYPE] =
     '{type_legend},type,headline;
-    {teaser_legend},source,teaserLinkText,teaserLinkCssClass,teaserLinkBehaviour,teaserContentTemplate;
+    {teaser_legend},source,teaserLinkText,teaserLinkCssClass,teaserLinkBehaviour,teaserContentTemplate,target;
     {text_legend},text;
     {image_legend},addImage;
     {template_legend:hide},customTpl;
@@ -37,7 +37,7 @@ $dc['subpalettes']['source_page']     = 'jumpTo';
 $dc['subpalettes']['source_file']     = 'fileSRC';
 $dc['subpalettes']['source_download'] = 'fileSRC';
 $dc['subpalettes']['source_article']  = 'articleId';
-$dc['subpalettes']['source_external'] = 'url,target';
+$dc['subpalettes']['source_external'] = 'url';
 
 
 /**
