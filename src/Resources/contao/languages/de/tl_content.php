@@ -37,10 +37,10 @@ $GLOBALS['TL_LANG']['tl_content']['teaser_legend']= 'Teaser-Einstellungen';
 /**
  * References
  */
-$GLOBALS['TL_LANG']['tl_content']['reference']['source']['page'] = 'Seite';
+$GLOBALS['TL_LANG']['tl_content']['reference']['source'][\HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement::SOURCE_PAGE] = 'Seite';
 $GLOBALS['TL_LANG']['tl_content']['reference']['source']['file'] = 'Datei';
 $GLOBALS['TL_LANG']['tl_content']['reference']['source']['download'] = 'Download';
-$GLOBALS['TL_LANG']['tl_content']['reference']['source']['article'] = 'Artikel';
+$GLOBALS['TL_LANG']['tl_content']['reference']['source'][\HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement::SOURCE_ARTICLE] = 'Artikel';
 $GLOBALS['TL_LANG']['tl_content']['reference']['source']['external'] = 'Externe URL';
 
 $GLOBALS['TL_LANG']['tl_content']['reference']['teaserLinkBehaviour']['default'] = 'Standard - Link anzeigen';

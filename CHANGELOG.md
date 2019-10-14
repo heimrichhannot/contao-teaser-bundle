@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.0-DEV] - 2019-10-14
+
+### Changed
+* BREAKING: use already existing article db field instead of articleId -> use the migration command for update your db
+
+#### Added
+* migration command
+
+
 ## [0.3.2] - 2018-03-20
 
 #### Changed

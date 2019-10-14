@@ -10,7 +10,7 @@
 
 $dc = &$GLOBALS['TL_DCA']['tl_content'];
 
-$dc['config']['onload_callback'][] = ['huh.teaser.listener.dc.content', 'modifyPalette'];
+$dc['config']['onload_callback'][] = ['huh.teaser.listener.dc.content', 'onLoad'];
 
 /**
  * Selector
@@ -36,7 +36,7 @@ $dc['palettes'][\HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElem
 $dc['subpalettes']['source_page']     = 'jumpTo';
 $dc['subpalettes']['source_file']     = 'fileSRC';
 $dc['subpalettes']['source_download'] = 'fileSRC';
-$dc['subpalettes']['source_article']  = 'articleId';
+$dc['subpalettes']['source_article']  = 'article';
 $dc['subpalettes']['source_external'] = 'url';
 
 
@@ -46,7 +46,7 @@ $dc['subpalettes']['source_external'] = 'url';
 $arrFields = [
     'source'                => [
         'label'            => &$GLOBALS['TL_LANG']['tl_content']['source'],
-        'default'          => 'page',
+        'default'          => \HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement::SOURCE_PAGE,
         'exclude'          => true,
         'filter'           => true,
         'inputType'        => 'radio',
@@ -74,14 +74,6 @@ $arrFields = [
         ],
         'sql'           => "binary(16) NULL",
     ],
-    'articleId'             => [
-        'label'            => &$GLOBALS['TL_LANG']['tl_content']['articleId'],
-        'exclude'          => true,
-        'inputType'        => 'select',
-        'options_callback' => ['huh.teaser.listener.dc.content', 'getArticleAlias'],
-        'eval'             => ['chosen' => true, 'mandatory' => true],
-        'sql'              => "int(10) unsigned NOT NULL default '0'",
-    ],
     'teaserLinkText'        => [
         'label'            => &$GLOBALS['TL_LANG']['tl_content']['teaserLinkText'],
         'exclude'          => true,
@@ -103,7 +95,11 @@ $arrFields = [
         'exclude'   => true,
         'inputType' => 'select',
         'default'   => 'default',
-        'options'   => ['default', 'linkAll', 'hideLink'],
+        'options'   => [
+            \HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement::LINK_BEHAVIOUR_SHOW_LINK,
+            \HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement::LINK_BEHAVIOUR_LINK_ALL,
+            \HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement::LINK_BEHAVIOUR_HIDE_LINK
+        ],
         'reference' => &$GLOBALS['TL_LANG']['tl_content']['reference']['teaserLinkBehaviour'],
         'eval'      => ['tl_class' => 'w50 clr'],
         'sql'       => "varchar(32) NOT NULL default ''",
