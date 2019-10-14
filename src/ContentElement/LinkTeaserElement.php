@@ -28,6 +28,13 @@ class LinkTeaserElement extends ContentText
 {
     const TYPE = 'linkteaser';
 
+    const SOURCE_PAGE = 'page';
+    const SOURCE_ARTICLE = 'article';
+
+    const LINK_BEHAVIOUR_SHOW_LINK = 'default';
+    const LINK_BEHAVIOUR_LINK_ALL = 'linkAll';
+    const LINK_BEHAVIOUR_HIDE_LINK = 'hideLink';
+
     /**
      * Template
      *
@@ -322,7 +329,7 @@ class LinkTeaserElement extends ContentText
      */
     protected function handleArticle()
     {
-        if (($objArticle = ArticleModel::findPublishedById($this->articleId, array('eager' => true))) === null)
+        if (($objArticle = ArticleModel::findPublishedById($this->article, array('eager' => true))) === null)
         {
             return false;
         }

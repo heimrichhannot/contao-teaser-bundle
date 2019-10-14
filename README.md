@@ -9,6 +9,7 @@ Can be used as replacement for ce_page_teaser.
 * Link the whole article
 * Hide more link, link entire element.
 * Overwrite content template
+* migration command from ce_page_teaser module and older versions.
 
 ![Teaser Frontend](docs/img/contao-teaser-bundle_screenshot_frontend.png)
 
@@ -30,7 +31,8 @@ composer require heimrichhannot/contao-teaser-bundle
 Update the database afterwards.
 
 
-## Extend
+
+## Developers
 
 ### Templates
 
@@ -43,3 +45,19 @@ Name | Arguments | Expected return value | Description
 ---- | --------- | --------------------- | -----------
 generateTeaserLink | $element: LinkTeaserElement, $showMore: bool | $showMore: bool | Add custom teaser source and modify the content element. 
 getContentSourceOptions | $options: array, $dc: DataContainer | $options: array | Add custom source options to the dca.
+
+### Commands
+
+`huh:teaser:migrate` - Provide migration from ce_page_teaser moduel, contao-teaser module and version 0.x of this bundle.
+
+### Upgrade
+
+#### From contao-ce_page_teaser module
+
+* use migration command to update the database
+* adapt template file
+
+#### From module and version 0.x
+
+* database articleId was dropped and article used instead (already existing in core)
+* use migration command after update to get automatic migration

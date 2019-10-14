@@ -52,28 +52,19 @@ class ContentListener implements FrameworkAwareInterface
         return $arrOptions;
     }
 
-    /**
-     * Modify the current datacontainer palette
-     *
-     * @param DataContainer $dc
-     */
-    public function modifyPalette(DataContainer $dc)
+    public function onLoad(DataContainer $dc)
     {
-        $id = strlen(Input::get('id')) ? Input::get('id') : CURRENT_ID;
-
-        $objModel = ContentModel::findByPk($id);
-
-        if (!$objModel || $objModel->type != LinkTeaserElement::TYPE)
-        {
+        $contentModel = ContentModel::findByPk($dc->id);
+        if (!$contentModel->type === LinkTeaserElement::TYPE) {
             return;
         }
 
+        // update core fields
         $dca = &$GLOBALS['TL_DCA']['tl_content'];
-
-        // make text non mandatory
         $dca['fields']['text']['eval']['mandatory'] = false;
-
         $dca['fields']['target']['load_callback'][] = [__CLASS__, 'setTargetFlags'];
+        $dca['fields']['article']['label'] = &$GLOBALS['TL_LANG']['tl_content']['articleId'];
+        $dca['fields']['article']['eval']['submitOnChange'] = false;
     }
 
     /**
@@ -123,54 +114,6 @@ class ContentListener implements FrameworkAwareInterface
     }
 
     /**
-     * Get all articles and return them as array
-     *
-     * @param  DataContainer $dc
-     *
-     * @return array
-     */
-    public function getArticleAlias(DataContainer $dc)
-    {
-        $database = $this->framework->createInstance(Database::class);
-        $user     = $this->framework->createInstance(BackendUser::class);
-        $pids  = [];
-        $aliases = [];
-
-        if (!$user->isAdmin)
-        {
-            foreach ($user->pagemounts as $id)
-            {
-                $pids[] = $id;
-                $pids   = array_merge($pids, $database->getChildRecords($id, 'tl_page'));
-            }
-
-            if (empty($pids))
-            {
-                return $aliases;
-            }
-
-            $objAlias = $database->prepare("SELECT a.id, a.title, a.inColumn, p.title AS parent FROM tl_article a LEFT JOIN tl_page p ON p.id=a.pid WHERE a.pid IN(" . implode(',', array_map('intval', array_unique($pids))) . ") ORDER BY parent, a.sorting")
-                ->execute($dc->id);
-        } else
-        {
-            $objAlias = $database->prepare("SELECT a.id, a.title, a.inColumn, p.title AS parent FROM tl_article a LEFT JOIN tl_page p ON p.id=a.pid ORDER BY parent, a.sorting")
-                ->execute($dc->id);
-        }
-
-        if ($objAlias->numRows)
-        {
-            System::loadLanguageFile('tl_article');
-
-            while ($objAlias->next())
-            {
-                $aliases[$objAlias->parent][$objAlias->id] = $objAlias->title . ' (' . ($GLOBALS['TL_LANG']['COLS'][$objAlias->inColumn] ?: $objAlias->inColumn) . ', ID ' . $objAlias->id . ')';
-            }
-        }
-
-        return $aliases;
-    }
-
-    /**
      * Add the source options depending on the allowed fields (see #5498)
      *
      * @param  DataContainer $dc
@@ -183,7 +126,13 @@ class ContentListener implements FrameworkAwareInterface
 
         if ($user->isAdmin)
         {
-            $arrOptions = array('page', 'file', 'download', 'article', 'external');
+            $arrOptions = [
+                LinkTeaserElement::SOURCE_PAGE,
+                'file',
+                'download',
+                LinkTeaserElement::SOURCE_ARTICLE,
+                'external'
+            ];
 
             // HOOK: extend options by callback functions
             if (isset($GLOBALS['TL_HOOKS']['getContentSourceOptions']) && is_array($GLOBALS['TL_HOOKS']['getContentSourceOptions']))
@@ -213,7 +162,7 @@ class ContentListener implements FrameworkAwareInterface
         }
 
         // Add the "article" option
-        if ($user->hasAccess('tl_content::articleId', 'alexf'))
+        if ($user->hasAccess('tl_content::article', 'alexf'))
         {
             $arrOptions[] = 'article';
         }
