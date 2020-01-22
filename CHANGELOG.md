@@ -1,7 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.0.0-DEV] - 2019-10-14
+## [1.0.1] - 2020-01-22
+- added alt-attribute to ce_linkteaser link
+- fixed an exception in backend when overwriting teaser template from an template theme folder (`/templates/<theme>/`) (#5)
+
+## [1.0.0] - 2019-10-14
 
 ### Changed
 * BREAKING: use already existing article db field instead of articleId -> use the migration command for update your db

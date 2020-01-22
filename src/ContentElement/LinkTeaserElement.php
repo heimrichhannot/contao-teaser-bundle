@@ -13,6 +13,7 @@ namespace HeimrichHannot\ContaoTeaserBundle\ContentElement;
 
 
 use Contao\ArticleModel;
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\ContentText;
 use Contao\Controller;
@@ -156,6 +157,14 @@ class LinkTeaserElement extends ContentText
      */
     protected function generateContent()
     {
+        if (System::getContainer()->get('huh.utils.container')->isBackend()) {
+            Controller::loadDataContainer('tl_content');
+            $template = new BackendTemplate('be_wildcard');
+            $template->title = $this->headline;
+            $wildcard = $this->Template->linkTitle;
+            $template->wildcard = $wildcard;
+            return $template->parse();
+        }
         switch ($this->floating)
         {
             case 'left':
