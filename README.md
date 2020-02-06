@@ -50,6 +50,10 @@ getContentSourceOptions | $options: array, $dc: DataContainer | $options: array 
 
 `huh:teaser:migrate` - Provide migration from ce_page_teaser moduel, contao-teaser module and version 0.x of this bundle.
 
+### Add custom text for more link
+
+Just add your custom text in the default contao translation file within `$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']`. Afterwards (maybe you need to clear your cache) you can choose the new entry in the more link text field.
+
 ### Upgrade
 
 #### From contao-ce_page_teaser module
