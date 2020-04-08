@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2020-04-08
+- linkteaser now respects overwriteMeta.imageUrl, if element is not set to linkAll
+
 ## [1.0.1] - 2020-01-22
 - added alt-attribute to ce_linkteaser link
 - fixed an exception in backend when overwriting teaser template from an template theme folder (`/templates/<theme>/`) (#5)
