@@ -15,4 +15,4 @@ if (!$this->linkAll && $this->overwriteMeta && $this->imageUrl) {
 if ($this->caption) {
     $image['caption'] = $this->caption;
 }
-$this->insert('image', $image)
+$this->insert('image', $image);

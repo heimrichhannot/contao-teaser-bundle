@@ -114,7 +114,10 @@ class LinkTeaserElement extends ContentText
 
         if (!$this->showMore)
         {
-            return false;
+            if (System::getContainer()->get('huh.utils.container')->isDev()) {
+                $this->content = '<!-- Teaser Bundle: Source was not found or hook returned false (showMore = false) -->';
+            }
+            return;
         }
 
         switch ($this->teaserLinkBehaviour)

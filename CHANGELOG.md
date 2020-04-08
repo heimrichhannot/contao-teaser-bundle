@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.1] - 2020-04-08
+- fixed error in partials_linkteaser_image
+- an html comment is now added in dev mode if show more is false (source entity was not found or hook returned false)
+
 ## [1.1.0] - 2020-04-08
 - linkteaser now respects overwriteMeta.imageUrl, if element is not set to linkAll
 
