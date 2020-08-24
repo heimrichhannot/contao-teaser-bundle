@@ -3,8 +3,7 @@ services:
     autowire: true
     autoconfigure: true
 
-  huh.teaser.listener.dc.content:
-    class: HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener
+  HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener:
     public: true
 
   HeimrichHannot\ContaoTeaserBundle\Command\MigrationCommand: ~

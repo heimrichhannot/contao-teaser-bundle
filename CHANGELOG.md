@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.4] - 2020-08-24
+- fixed autowiring issue
+- renamed data container listener service
+
 ## [1.1.3] - 2020-08-24
 - fixed migration command not avaiable in contao 4.9 (#9)
 - fixed ContentListener autowiring

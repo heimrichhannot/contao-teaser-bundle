@@ -10,7 +10,7 @@
 
 $dc = &$GLOBALS['TL_DCA']['tl_content'];
 
-$dc['config']['onload_callback'][] = ['huh.teaser.listener.dc.content', 'onLoad'];
+$dc['config']['onload_callback'][] = [HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener::class, 'onLoad'];
 
 /**
  * Selector
@@ -50,7 +50,7 @@ $arrFields = [
         'exclude'          => true,
         'filter'           => true,
         'inputType'        => 'radio',
-        'options_callback' => ['huh.teaser.listener.dc.content', 'getSourceOptions'],
+        'options_callback' => [HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener::class, 'getSourceOptions'],
         'reference'        => &$GLOBALS['TL_LANG']['tl_content']['reference']['source'],
         'eval'             => ['submitOnChange' => true, 'helpwizard' => true, 'mandatory' => true],
         'sql'              => "varchar(12) NOT NULL default ''",
@@ -70,7 +70,7 @@ $arrFields = [
         'inputType'     => 'fileTree',
         'eval'          => ['filesOnly' => true, 'fieldType' => 'radio', 'mandatory' => true, 'tl_class' => 'clr'],
         'load_callback' => [
-            ['huh.teaser.listener.dc.content', 'setFileSrcFlags'],
+            [HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener::class, 'setFileSrcFlags'],
         ],
         'sql'           => "binary(16) NULL",
     ],
@@ -79,7 +79,7 @@ $arrFields = [
         'exclude'          => true,
         'search'           => true,
         'inputType'        => 'select',
-        'options_callback' => ['huh.teaser.listener.dc.content', 'getTeaserLinkText'],
+        'options_callback' => [HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener::class, 'getTeaserLinkText'],
         'eval'             => ['tl_class' => 'w50 clr', 'maxlength' => 64],
         'sql'              => "varchar(64) NOT NULL default ''",
     ],
@@ -108,7 +108,7 @@ $arrFields = [
         'label'            => &$GLOBALS['TL_LANG']['tl_content']['teaserContentTemplate'],
         'exclude'          => true,
         'inputType'        => 'select',
-        'options_callback' => ['huh.teaser.listener.dc.content', 'getTeaserContentTemplates'],
+        'options_callback' => [HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener::class, 'getTeaserContentTemplates'],
         'eval'             => ['tl_class' => 'w50', 'includeBlankOption' => true],
         'sql'              => "varchar(64) NOT NULL default ''",
     ],
