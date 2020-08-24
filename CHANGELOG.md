@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.3] - 2020-08-24
+- fixed migration command not avaiable in contao 4.9 (#9)
+- fixed ContentListener autowiring
+
 ## [1.1.2] - 2020-08-10
 - removed alt-attribute from ce_linkteaser link
 - removed title-attribute from span

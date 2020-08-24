@@ -16,17 +16,26 @@ use Contao\Backend;
 use Contao\BackendUser;
 use Contao\Config;
 use Contao\ContentModel;
-use Contao\CoreBundle\Framework\FrameworkAwareInterface;
-use Contao\CoreBundle\Framework\FrameworkAwareTrait;
-use Contao\Database;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\DataContainer;
-use Contao\Input;
 use Contao\System;
 use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
 
-class ContentListener implements FrameworkAwareInterface
+class ContentListener
 {
-    use FrameworkAwareTrait;
+    /**
+     * @var ContaoFramework
+     */
+    protected $framework;
+
+
+    /**
+     * ContentListener constructor.
+     */
+    public function __construct(ContaoFramework $framework)
+    {
+        $this->framework = $framework;
+    }
 
     public function getTeaserLinkText()
     {

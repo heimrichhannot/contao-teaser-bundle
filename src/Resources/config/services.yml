@@ -1,8 +1,10 @@
 services:
-  _instanceof:
-    Contao\CoreBundle\Framework\FrameworkAwareInterface:
-      calls:
-      - ["setFramework", ["@contao.framework"]]
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
   huh.teaser.listener.dc.content:
     class: HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener
     public: true
+
+  HeimrichHannot\ContaoTeaserBundle\Command\MigrationCommand: ~
