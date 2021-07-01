@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2021-07-01
+- added Polish translation
+
 ## [1.1.4] - 2020-08-24
 - fixed autowiring issue
 - renamed data container listener service

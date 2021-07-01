@@ -1,35 +1,26 @@
 <?php
-/**
- * Contao Open Source CMS
- *
- * Copyright (c) 2016 Heimrich & Hannot GmbH
- *
- * @package teaser
- * @author  Rico Kaltofen <r.kaltofen@heimrich-hannot.de>
- * @license http://www.gnu.org/licences/lgpl-3.0.html LGPL
- */
 
 /**
  * Teaser links
  */
-$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['default'][0] = 'mehr';
-$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['download'][0] = 'Download';
-$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['pageWithTitle'][0] = 'Seite "%s" besuchen';
-$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['fileWithTitle'][0] = 'Datei "%s" anzeigen';
-$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['downloadWithTitle'][0] = 'Datei "%s" herunterladen';
-$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['articleWithTitle'][0] = 'Artikel "%s" besuchen';
-$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['externalMailTitle'][0] = 'E-Mail an "%s" schreiben';
-$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['externalLinkTitle'][0] = 'Externe Seite "%s" besuchen';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['default'][0]           = 'więcej';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['download'][0]          = 'Do pobrania';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['pageWithTitle'][0]     = 'Odwiedź stronę "%s"';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['fileWithTitle'][0]     = 'Pokaż stronę "%s”';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['downloadWithTitle'][0] = 'Pobierz stronę "%s”';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['articleWithTitle'][0]  = 'Szukaj artykułu "%s"';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['externalMailTitle'][0] = 'Napisz wiadomość e-mail do "%s"';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['externalLinkTitle'][0] = 'Odwiedź zewnętrzną stronę "%s"';
 
-$GLOBALS['TL_LANG']['MSC']['linkteaser']['pageTitle'] = 'Przejdź do strony: %s';
-$GLOBALS['TL_LANG']['MSC']['linkteaser']['fileTitle'] = 'Datei anzeigen: %s';
-$GLOBALS['TL_LANG']['MSC']['linkteaser']['downloadTitle'] = 'Datei herunterladen: %s';
-$GLOBALS['TL_LANG']['MSC']['linkteaser']['articleTitle'] = 'Artikel aufrufen: %s';
-$GLOBALS['TL_LANG']['MSC']['linkteaser']['externalMailTitle'] = 'E-Mail schreiben an: %s';
-$GLOBALS['TL_LANG']['MSC']['linkteaser']['externalLinkTitle'] = 'Przejdź do strony: %s';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['pageTitle']         = 'Odwiedź stronę: %s';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['fileTitle']         = 'Pokaż plik: %s';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['downloadTitle']     = 'Pobierz plik: %s';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['articleTitle']      = 'Pokaż artykuł: %s';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['externalMailTitle'] = 'Napisz wiadomość e-mail do: %s';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['externalLinkTitle'] = 'Odwiedź stronę: %s';
 
 
 /**
  * Content elements
  */
-$GLOBALS['TL_LANG']['CTE']['linkteaser'] = array('Link-Teaser', 'Erzeugt einen verlinkten Teaser zu einer Seite, Artikel, Datei oder externen URL.');
+$GLOBALS['TL_LANG']['CTE']['linkteaser'] = ['Link-Teaser', 'Tworzy linkowany teaser do strony, artykułu, pliku lub zewnętrznego adresu URL.'];
