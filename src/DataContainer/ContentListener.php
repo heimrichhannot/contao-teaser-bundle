@@ -66,7 +66,7 @@ class ContentListener
             $arrOptions[$strKey] = $strTitle;
         }
 
-        $options['Vordefiniert'] = $arrOptions;
+        $options[$GLOBALS['TL_LANG']['MSC']['linkteaser']['predefinedLinkText']] = $arrOptions;
 
         return $options;
     }
@@ -74,7 +74,7 @@ class ContentListener
     public function onLoadCallback(DataContainer $dc)
     {
         $contentModel = ContentModel::findByPk($dc->id);
-        if (!$contentModel->type === LinkTeaserElement::TYPE) {
+        if ($contentModel->type !== LinkTeaserElement::TYPE) {
             return;
         }
 

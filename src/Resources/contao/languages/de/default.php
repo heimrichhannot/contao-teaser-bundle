@@ -29,6 +29,7 @@ $GLOBALS['TL_LANG']['MSC']['linkteaser']['externalMailTitle'] = 'E-Mail schreibe
 $GLOBALS['TL_LANG']['MSC']['linkteaser']['externalLinkTitle'] = 'Seite besuchen: %s';
 
 $GLOBALS['TL_LANG']['MSC']['linkteaser']['customLinkText'] = 'Benutzerdefiniert';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['predefinedLinkText'] = 'Vordefiniert';
 
 
 /**
