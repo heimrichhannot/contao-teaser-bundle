@@ -29,6 +29,9 @@ $GLOBALS['TL_LANG']['tl_content']['teaserLinkBehaviour'][1] = 'Steuern Sie das v
 $GLOBALS['TL_LANG']['tl_content']['teaserContentTemplate'][0] = 'Teaser-Template überschreiben';
 $GLOBALS['TL_LANG']['tl_content']['teaserContentTemplate'][1] = 'Überschreiben Sie hier das Template für den Inhalt des Teasers.';
 
+$GLOBALS['TL_LANG']['tl_content']['linkTitle']['huh_teaser'] = 'Geben Sie hier einen benutzerdefinierten Weiterlesen-Link Text an.';
+
+
 /**
  * Legends
  */

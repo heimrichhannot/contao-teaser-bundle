@@ -23,6 +23,8 @@ use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
 
 class ContentListener
 {
+    const LINK_TEXT_CUSTOM = 'custom';
+
     /**
      * @var ContaoFramework
      */
@@ -39,7 +41,9 @@ class ContentListener
 
     public function getTeaserLinkText()
     {
-        $arrOptions = [];
+        $arrOptions = [
+            static::LINK_TEXT_CUSTOM => $GLOBALS['TL_LANG']['MSC']['linkteaser']['customLinkText'],
+        ];
 
         $arrTitles = $GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext'];
 
@@ -47,6 +51,10 @@ class ContentListener
         {
             return $arrOptions;
         }
+
+        $options = [$GLOBALS['TL_LANG']['MSC']['linkteaser']['customLinkText'] => $arrOptions];
+
+        $arrOptions = [];
 
         foreach ($arrTitles as $strKey => $strTitle)
         {
@@ -58,13 +66,15 @@ class ContentListener
             $arrOptions[$strKey] = $strTitle;
         }
 
-        return $arrOptions;
+        $options[$GLOBALS['TL_LANG']['MSC']['linkteaser']['predefinedLinkText']] = $arrOptions;
+
+        return $options;
     }
 
-    public function onLoad(DataContainer $dc)
+    public function onLoadCallback(DataContainer $dc)
     {
         $contentModel = ContentModel::findByPk($dc->id);
-        if (!$contentModel->type === LinkTeaserElement::TYPE) {
+        if ($contentModel->type !== LinkTeaserElement::TYPE) {
             return;
         }
 
@@ -74,6 +84,7 @@ class ContentListener
         $dca['fields']['target']['load_callback'][] = [__CLASS__, 'setTargetFlags'];
         $dca['fields']['article']['label'] = &$GLOBALS['TL_LANG']['tl_content']['articleId'];
         $dca['fields']['article']['eval']['submitOnChange'] = false;
+        $dca['fields']['linkTitle']['label'][1] = $GLOBALS['TL_LANG']['tl_content']['linkTitle']['huh_teaser'];
     }
 
     /**
