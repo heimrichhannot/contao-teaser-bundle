@@ -19,6 +19,8 @@ $GLOBALS['TL_LANG']['MSC']['linkteaser']['articleTitle']      = 'Pokaż artykuł
 $GLOBALS['TL_LANG']['MSC']['linkteaser']['externalMailTitle'] = 'Napisz wiadomość e-mail do: %s';
 $GLOBALS['TL_LANG']['MSC']['linkteaser']['externalLinkTitle'] = 'Odwiedź stronę: %s';
 
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['customLinkText'] = 'Zdefiniowany przez użytkownia';
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['predefinedLinkText'] = 'Wstępnie zdefiniowany';
 
 /**
  * Content elements
