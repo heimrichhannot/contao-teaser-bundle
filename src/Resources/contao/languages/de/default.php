@@ -28,6 +28,8 @@ $GLOBALS['TL_LANG']['MSC']['linkteaser']['articleTitle'] = 'Artikel aufrufen: %s
 $GLOBALS['TL_LANG']['MSC']['linkteaser']['externalMailTitle'] = 'E-Mail schreiben an: %s';
 $GLOBALS['TL_LANG']['MSC']['linkteaser']['externalLinkTitle'] = 'Seite besuchen: %s';
 
+$GLOBALS['TL_LANG']['MSC']['linkteaser']['customLinkText'] = 'Benutzerdefiniert';
+
 
 /**
  * Content elements
