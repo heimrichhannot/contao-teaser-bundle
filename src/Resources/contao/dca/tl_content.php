@@ -81,7 +81,7 @@ $arrFields = [
     ],
     'teaserLinkText'        => [
         'label'            => &$GLOBALS['TL_LANG']['tl_content']['teaserLinkText'],
-        'exclude'          => false,
+        'exclude'          => true,
         'search'           => false,
         'inputType'        => 'select',
         'options_callback' => [ContentListener::class, 'getTeaserLinkText'],
