@@ -1,8 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2021-08-30
+- Added: custom-Option to teaserLinkText field which will show a user input field to set a custom link text
+
 ## [1.2.0] - 2021-07-01
-- added Polish translation
+- Added: Polish translation
 
 ## [1.1.4] - 2020-08-24
 - fixed autowiring issue
