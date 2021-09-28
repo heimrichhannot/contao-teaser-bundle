@@ -16,6 +16,7 @@ use Contao\Backend;
 use Contao\BackendUser;
 use Contao\Config;
 use Contao\ContentModel;
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\DataContainer;
 use Contao\System;
@@ -85,6 +86,13 @@ class ContentListener
         $dca['fields']['article']['label'] = &$GLOBALS['TL_LANG']['tl_content']['articleId'];
         $dca['fields']['article']['eval']['submitOnChange'] = false;
         $dca['fields']['linkTitle']['label'][1] = $GLOBALS['TL_LANG']['tl_content']['linkTitle']['huh_teaser'];
+
+        if (static::LINK_TEXT_CUSTOM === $contentModel->teaserLinkText) {
+            PaletteManipulator::create()
+                ->addField('linkTitle','teaserLinkText', PaletteManipulator::POSITION_AFTER)
+                ->applyToPalette(LinkTeaserElement::TYPE, ContentModel::getTable());
+        }
+
     }
 
     /**

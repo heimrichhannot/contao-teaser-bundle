@@ -18,7 +18,6 @@ $dc['config']['onload_callback'][] = [ContentListener::class, 'onLoadCallback'];
 /**
  * Selector
  */
-$dc['palettes']['__selector__'][] = 'teaserLinkText';
 $dc['palettes']['__selector__'][] = 'source';
 
 /**
@@ -42,8 +41,6 @@ $dc['subpalettes']['source_file']     = 'fileSRC';
 $dc['subpalettes']['source_download'] = 'fileSRC';
 $dc['subpalettes']['source_article']  = 'article';
 $dc['subpalettes']['source_external'] = 'url';
-$dc['subpalettes']['teaserLinkText_custom'] = 'linkTitle';
-
 
 /**
  * Fields
