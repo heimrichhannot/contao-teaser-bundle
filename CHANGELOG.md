@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.4.1] - 2021-09-28
+- Fixed: palette issues with teaserLinkText (see [#12],[#13])
+
 ## [1.4.0] - 2021-08-31
 
 - Added: support for php 8
@@ -92,4 +95,5 @@ All notable changes to this project will be documented in this file.
 
 Initial version
 
-
+[#13]: https://github.com/heimrichhannot/contao-teaser-bundle/issues/13
+[#12]: https://github.com/heimrichhannot/contao-teaser-bundle/issues/12
