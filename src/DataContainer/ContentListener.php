@@ -29,7 +29,7 @@ class ContentListener
     /**
      * @var ContaoFramework
      */
-    protected $framework;
+    protected           $framework;
 
 
     /**
@@ -48,8 +48,7 @@ class ContentListener
 
         $arrTitles = $GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext'];
 
-        if (!is_array($arrTitles))
-        {
+        if (!is_array($arrTitles)) {
             return $arrOptions;
         }
 
@@ -57,10 +56,8 @@ class ContentListener
 
         $arrOptions = [];
 
-        foreach ($arrTitles as $strKey => $strTitle)
-        {
-            if (is_array($strTitle))
-            {
+        foreach ($arrTitles as $strKey => $strTitle) {
+            if (is_array($strTitle)) {
                 $strTitle = $strTitle[0];
             }
 
@@ -80,19 +77,31 @@ class ContentListener
         }
 
         // update core fields
-        $dca = &$GLOBALS['TL_DCA']['tl_content'];
-        $dca['fields']['text']['eval']['mandatory'] = false;
-        $dca['fields']['target']['load_callback'][] = [__CLASS__, 'setTargetFlags'];
-        $dca['fields']['article']['label'] = &$GLOBALS['TL_LANG']['tl_content']['articleId'];
+        $dca                                                = &$GLOBALS['TL_DCA']['tl_content'];
+        $dca['fields']['text']['eval']['mandatory']         = false;
+        $dca['fields']['target']['load_callback'][]         = [__CLASS__, 'setTargetFlags'];
+        $dca['fields']['article']['label']                  = &$GLOBALS['TL_LANG']['tl_content']['articleId'];
         $dca['fields']['article']['eval']['submitOnChange'] = false;
-        $dca['fields']['linkTitle']['label'][1] = $GLOBALS['TL_LANG']['tl_content']['linkTitle']['huh_teaser'];
+        $dca['fields']['linkTitle']['label'][1]             = $GLOBALS['TL_LANG']['tl_content']['linkTitle']['huh_teaser'];
 
         if (static::LINK_TEXT_CUSTOM === $contentModel->teaserLinkText) {
             PaletteManipulator::create()
-                ->addField('linkTitle','teaserLinkText', PaletteManipulator::POSITION_AFTER)
+                ->addField('linkTitle', 'teaserLinkText', PaletteManipulator::POSITION_AFTER)
                 ->applyToPalette(LinkTeaserElement::TYPE, ContentModel::getTable());
         }
 
+        // do the palette handling manually because of issues in contao dca palette calculation
+        if ($contentModel->source) {
+            $dca['palettes'][LinkTeaserElement::TYPE] = str_replace(
+                ',source,',
+                ',source,' . $dca['subpalettes']['source_' . $contentModel->source] . ',', $dca['palettes'][LinkTeaserElement::TYPE]
+            );
+        } else {
+            $dca['palettes'][LinkTeaserElement::TYPE] = str_replace(
+                ',source,',
+                ',source,' . $dca['subpalettes']['source_page'] . ',', $dca['palettes'][LinkTeaserElement::TYPE]
+            );
+        }
     }
 
     /**
@@ -105,10 +114,8 @@ class ContentListener
      */
     public function setTargetFlags($varValue, DataContainer $dc)
     {
-        if ($dc->activeRecord)
-        {
-            switch ($dc->activeRecord->source)
-            {
+        if ($dc->activeRecord) {
+            switch ($dc->activeRecord->source) {
                 case 'file':
                     $GLOBALS['TL_DCA'][$dc->table]['fields'][$dc->field]['default'] = true;
                     break;
@@ -122,16 +129,14 @@ class ContentListener
      * Dynamically add flags to the "fileSRC" field
      *
      * @param mixed $varValue
-     * @param  DataContainer $dc
+     * @param DataContainer $dc
      *
      * @return mixed
      */
     public function setFileSrcFlags($varValue, DataContainer $dc)
     {
-        if ($dc->activeRecord)
-        {
-            switch ($dc->activeRecord->source)
-            {
+        if ($dc->activeRecord) {
+            switch ($dc->activeRecord->source) {
                 case 'download':
                     $GLOBALS['TL_DCA'][$dc->table]['fields'][$dc->field]['eval']['extensions'] = Config::get('allowedDownload');
                     break;
@@ -144,16 +149,15 @@ class ContentListener
     /**
      * Add the source options depending on the allowed fields (see #5498)
      *
-     * @param  DataContainer $dc
+     * @param DataContainer $dc
      *
      * @return array
      */
     public function getSourceOptions(DataContainer $dc)
     {
-        $user     = $this->framework->createInstance(BackendUser::class);
+        $user = $this->framework->createInstance(BackendUser::class);
 
-        if ($user->isAdmin)
-        {
+        if ($user->isAdmin) {
             $arrOptions = [
                 LinkTeaserElement::SOURCE_PAGE,
                 'file',
@@ -163,10 +167,8 @@ class ContentListener
             ];
 
             // HOOK: extend options by callback functions
-            if (isset($GLOBALS['TL_HOOKS']['getContentSourceOptions']) && is_array($GLOBALS['TL_HOOKS']['getContentSourceOptions']))
-            {
-                foreach ($GLOBALS['TL_HOOKS']['getContentSourceOptions'] as $callback)
-                {
+            if (isset($GLOBALS['TL_HOOKS']['getContentSourceOptions']) && is_array($GLOBALS['TL_HOOKS']['getContentSourceOptions'])) {
+                foreach ($GLOBALS['TL_HOOKS']['getContentSourceOptions'] as $callback) {
                     $arrOptions = System::importStatic($callback[0])->{$callback[1]}($arrOptions, $dc);
                 }
             }
@@ -174,47 +176,40 @@ class ContentListener
             return $arrOptions;
         }
 
-        $arrOptions = array();
+        $arrOptions = [];
 
         // Add the "file" and "download" option
-        if ($user->hasAccess('tl_content::fileSRC', 'alexf'))
-        {
+        if ($user->hasAccess('tl_content::fileSRC', 'alexf')) {
             $arrOptions[] = 'file';
             $arrOptions[] = 'download';
         }
 
         // Add the "page" option
-        if ($user->hasAccess('tl_content::jumpTo', 'alexf'))
-        {
+        if ($user->hasAccess('tl_content::jumpTo', 'alexf')) {
             $arrOptions[] = 'page';
         }
 
         // Add the "article" option
-        if ($user->hasAccess('tl_content::article', 'alexf'))
-        {
+        if ($user->hasAccess('tl_content::article', 'alexf')) {
             $arrOptions[] = 'article';
         }
 
         // Add the "external" option
-        if ($user->hasAccess('tl_content::url', 'alexf'))
-        {
+        if ($user->hasAccess('tl_content::url', 'alexf')) {
             $arrOptions[] = 'external';
         }
 
         // HOOK: extend options by callback functions
-        if (isset($GLOBALS['TL_HOOKS']['getContentSourceOptions']) && is_array($GLOBALS['TL_HOOKS']['getContentSourceOptions']))
-        {
-            foreach ($GLOBALS['TL_HOOKS']['getContentSourceOptions'] as $callback)
-            {
+        if (isset($GLOBALS['TL_HOOKS']['getContentSourceOptions']) && is_array($GLOBALS['TL_HOOKS']['getContentSourceOptions'])) {
+            foreach ($GLOBALS['TL_HOOKS']['getContentSourceOptions'] as $callback) {
                 $arrOptions = System::importStatic($callback[0])->{$callback[1]}($arrOptions, $dc);
             }
         }
 
         // Add the option currently set
-        if ($dc->activeRecord && $dc->activeRecord->source != '')
-        {
+        if ($dc->activeRecord && $dc->activeRecord->source != '') {
             $arrOptions[] = $dc->activeRecord->source;
-            $arrOptions = array_unique($arrOptions);
+            $arrOptions   = array_unique($arrOptions);
         }
 
         return $arrOptions;

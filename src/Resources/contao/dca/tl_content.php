@@ -16,11 +16,6 @@ $dc = &$GLOBALS['TL_DCA']['tl_content'];
 $dc['config']['onload_callback'][] = [ContentListener::class, 'onLoadCallback'];
 
 /**
- * Selector
- */
-$dc['palettes']['__selector__'][] = 'source';
-
-/**
  * Palettes
  */
 $dc['palettes'][LinkTeaserElement::TYPE] =

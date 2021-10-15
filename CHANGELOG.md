@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.4.2] - 2021-10-15
+
+- Fixed: palette issues with source field
+
 ## [1.4.1] - 2021-09-28
 - Fixed: palette issues with teaserLinkText (see [#12],[#13])
 
