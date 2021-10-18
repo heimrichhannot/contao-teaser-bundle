@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.5.0] - 2021-10-18
+
+- Added: headline partial template
+- Added: headline-block to linkteaser_content_image templates
+
 ## [1.4.2] - 2021-10-15
 
 - Fixed: palette issues with source field
