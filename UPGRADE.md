@@ -5,7 +5,9 @@ This file contains information concerning upgrading from older version.
 ## From 1.x
 
 - Renamed Bundle class from HeimrichHannotContaoTeaserBundle to HeimrichHannotTeaserBundle
-- 
+- Renamed ContentListener to ContentContainer
+- Replaced Migration Command with Contao Migrations
+- Raised php and contao dependencies
 
 ## From module and version 0.x
 
