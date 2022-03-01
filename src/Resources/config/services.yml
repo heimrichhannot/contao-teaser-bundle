@@ -1,8 +1,6 @@
 services:
-  _defaults:
-    autowire: true
-    autoconfigure: true
 
   HeimrichHannot\ContaoTeaserBundle\:
     resource: "../../{DataContainer,Migration}/*"
     autoconfigure: true
+    autowire: true

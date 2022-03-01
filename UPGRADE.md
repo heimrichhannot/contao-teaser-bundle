@@ -2,6 +2,11 @@
 
 This file contains information concerning upgrading from older version.
 
+## From 1.x
+
+- Renamed Bundle class from HeimrichHannotContaoTeaserBundle to HeimrichHannotTeaserBundle
+- 
+
 ## From module and version 0.x
 
 The database field 'articleId' was dropped and 'article' is used instead (already existing field in the contao core).
