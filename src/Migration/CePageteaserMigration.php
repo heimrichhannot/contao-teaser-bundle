@@ -19,7 +19,7 @@ class CePageteaserMigration implements MigrationInterface
 
     public function getName(): string
     {
-        return "ce_page_teaser Migration";
+        return "ce_page_teaser to Teaser Bundle Migration";
     }
 
     public function shouldRun(): bool
