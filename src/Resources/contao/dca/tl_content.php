@@ -9,11 +9,9 @@
  */
 
 use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
-use HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener;
+use HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentContainer;
 
 $dc = &$GLOBALS['TL_DCA']['tl_content'];
-
-$dc['config']['onload_callback'][] = [ContentListener::class, 'onLoadCallback'];
 
 /**
  * Palettes
@@ -47,7 +45,6 @@ $arrFields = [
         'exclude'          => true,
         'filter'           => true,
         'inputType'        => 'radio',
-        'options_callback' => [ContentListener::class, 'getSourceOptions'],
         'reference'        => &$GLOBALS['TL_LANG']['tl_content']['reference']['source'],
         'eval'             => ['submitOnChange' => true, 'helpwizard' => true, 'mandatory' => true],
         'sql'              => "varchar(12) NOT NULL default ''",
@@ -66,9 +63,6 @@ $arrFields = [
         'exclude'       => true,
         'inputType'     => 'fileTree',
         'eval'          => ['filesOnly' => true, 'fieldType' => 'radio', 'mandatory' => true, 'tl_class' => 'clr'],
-        'load_callback' => [
-            [ContentListener::class, 'setFileSrcFlags'],
-        ],
         'sql'           => "binary(16) NULL",
     ],
     'teaserLinkText'        => [
@@ -76,7 +70,6 @@ $arrFields = [
         'exclude'          => true,
         'search'           => false,
         'inputType'        => 'select',
-        'options_callback' => [ContentListener::class, 'getTeaserLinkText'],
         'eval'             => [
             'tl_class' => 'w50 clr',
             'maxlength' => 64,
@@ -109,7 +102,6 @@ $arrFields = [
         'label'            => &$GLOBALS['TL_LANG']['tl_content']['teaserContentTemplate'],
         'exclude'          => true,
         'inputType'        => 'select',
-        'options_callback' => [ContentListener::class, 'getTeaserContentTemplates'],
         'eval'             => ['tl_class' => 'w50', 'includeBlankOption' => true],
         'sql'              => "varchar(64) NOT NULL default ''",
     ],

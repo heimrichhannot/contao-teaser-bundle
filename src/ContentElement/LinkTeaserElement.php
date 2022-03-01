@@ -24,7 +24,7 @@ use Contao\Input;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
-use HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener;
+use HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentContainer;
 
 class LinkTeaserElement extends ContentText
 {
@@ -78,7 +78,7 @@ class LinkTeaserElement extends ContentText
     {
         global $objPage;
 
-        if (ContentListener::LINK_TEXT_CUSTOM === $this->teaserLinkText) {
+        if (ContentContainer::LINK_TEXT_CUSTOM === $this->teaserLinkText) {
             $this->label = $this->linkTitle;
         } else {
             $this->label = $GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext'][$this->teaserLinkText];

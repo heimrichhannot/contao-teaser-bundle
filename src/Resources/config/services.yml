@@ -4,9 +4,5 @@ services:
     autoconfigure: true
 
   HeimrichHannot\ContaoTeaserBundle\:
-    resource: "../../{Migration}/*"
-
-  HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener:
-    public: true
-
-  HeimrichHannot\ContaoTeaserBundle\Command\MigrationCommand: ~
+    resource: "../../{DataContainer,Migration}/*"
+    autoconfigure: true
