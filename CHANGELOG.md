@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.0] - 2022-03-01
+- Added: ce_page_teaser and teaser module contao migrations
+- Changed: minimum php version is now 7.4
+- Changed: minimum contao version is now 4.9
+- Changed: refactored some code 
+- Changed: renamed Bundle class
+- Removed: MigrationCommand
+
 ## [1.5.0] - 2021-10-18
 
 - Added: headline partial template
