@@ -14,7 +14,7 @@ namespace HeimrichHannot\ContaoTeaserBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class HeimrichHannotContaoTeaserBundle extends Bundle
+class HeimrichHannotTeaserBundle extends Bundle
 {
 
 }

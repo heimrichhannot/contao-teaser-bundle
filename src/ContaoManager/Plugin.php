@@ -18,7 +18,7 @@ use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Config\ConfigInterface;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Config\ConfigPluginInterface;
-use HeimrichHannot\ContaoTeaserBundle\HeimrichHannotContaoTeaserBundle;
+use HeimrichHannot\ContaoTeaserBundle\HeimrichHannotTeaserBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
 class Plugin implements BundlePluginInterface, ConfigPluginInterface
@@ -34,7 +34,7 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
     public function getBundles(ParserInterface $parser)
     {
         return [
-            BundleConfig::create(HeimrichHannotContaoTeaserBundle::class)
+            BundleConfig::create(HeimrichHannotTeaserBundle::class)
                 ->setLoadAfter([ContaoCoreBundle::class]),
         ];
     }
@@ -49,6 +49,6 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
      */
     public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig)
     {
-        $loader->load('@HeimrichHannotContaoTeaserBundle/Resources/config/services.yml');
+        $loader->load('@HeimrichHannotTeaserBundle/Resources/config/services.yml');
     }
 }

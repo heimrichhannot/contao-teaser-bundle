@@ -1,9 +1,6 @@
 services:
-  _defaults:
-    autowire: true
+
+  HeimrichHannot\ContaoTeaserBundle\:
+    resource: "../../{DataContainer,Migration}/*"
     autoconfigure: true
-
-  HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentListener:
-    public: true
-
-  HeimrichHannot\ContaoTeaserBundle\Command\MigrationCommand: ~
+    autowire: true

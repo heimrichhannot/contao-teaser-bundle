@@ -18,28 +18,29 @@ use Contao\Config;
 use Contao\ContentModel;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\DataContainer;
 use Contao\System;
 use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
+use Symfony\Component\Security\Core\Security;
 
-class ContentListener
+class ContentContainer
 {
     const LINK_TEXT_CUSTOM = 'custom';
 
-    /**
-     * @var ContaoFramework
-     */
-    protected           $framework;
-
+    private Security        $security;
 
     /**
-     * ContentListener constructor.
+     * ContentContainer constructor.
      */
-    public function __construct(ContaoFramework $framework)
+    public function __construct(Security $security)
     {
-        $this->framework = $framework;
+        $this->security = $security;
     }
 
+    /**
+     * @Callback(table="tl_content", target="fields.teaserLinkText.options")
+     */
     public function getTeaserLinkText()
     {
         $arrOptions = [
@@ -69,8 +70,15 @@ class ContentListener
         return $options;
     }
 
-    public function onLoadCallback(DataContainer $dc)
+    /**
+     * @Callback(table="tl_content", target="config.onload")
+     */
+    public function onLoadCallback(DataContainer $dc = null): void
     {
+        if (!$dc || !$dc->id) {
+            return;
+        }
+
         $contentModel = ContentModel::findByPk($dc->id);
         if ($contentModel->type !== LinkTeaserElement::TYPE) {
             return;
@@ -92,12 +100,12 @@ class ContentListener
 
         // do the palette handling manually because of issues in contao dca palette calculation
         if ($contentModel->source) {
-            $dca['palettes'][LinkTeaserElement::TYPE] = str_replace(
+            $dca['palettes'][LinkTeaserElement::TYPE] = \str_replace(
                 ',source,',
                 ',source,' . $dca['subpalettes']['source_' . $contentModel->source] . ',', $dca['palettes'][LinkTeaserElement::TYPE]
             );
         } else {
-            $dca['palettes'][LinkTeaserElement::TYPE] = str_replace(
+            $dca['palettes'][LinkTeaserElement::TYPE] = \str_replace(
                 ',source,',
                 ',source,' . $dca['subpalettes']['source_page'] . ',', $dca['palettes'][LinkTeaserElement::TYPE]
             );
@@ -128,12 +136,13 @@ class ContentListener
     /**
      * Dynamically add flags to the "fileSRC" field
      *
-     * @param mixed $varValue
-     * @param DataContainer $dc
+     * @Callback(table="tl_content", target="fields.fileSRC.load")
      *
+     * @param mixed $value
+     * @param DataContainer $dc
      * @return mixed
      */
-    public function setFileSrcFlags($varValue, DataContainer $dc)
+    public function setFileSrcFlags($value, $dc)
     {
         if ($dc->activeRecord) {
             switch ($dc->activeRecord->source) {
@@ -143,19 +152,17 @@ class ContentListener
             }
         }
 
-        return $varValue;
+        return $value;
     }
 
     /**
      * Add the source options depending on the allowed fields (see #5498)
      *
-     * @param DataContainer $dc
-     *
-     * @return array
+     * @Callback(table="tl_content", target="fields.source.options")
      */
-    public function getSourceOptions(DataContainer $dc)
+    public function onSourceOptionsCallback(DataContainer $dc = null): array
     {
-        $user = $this->framework->createInstance(BackendUser::class);
+        $user = $this->security->getUser();
 
         if ($user->isAdmin) {
             $arrOptions = [
@@ -167,7 +174,7 @@ class ContentListener
             ];
 
             // HOOK: extend options by callback functions
-            if (isset($GLOBALS['TL_HOOKS']['getContentSourceOptions']) && is_array($GLOBALS['TL_HOOKS']['getContentSourceOptions'])) {
+            if (\isset($GLOBALS['TL_HOOKS']['getContentSourceOptions']) && \is_array($GLOBALS['TL_HOOKS']['getContentSourceOptions'])) {
                 foreach ($GLOBALS['TL_HOOKS']['getContentSourceOptions'] as $callback) {
                     $arrOptions = System::importStatic($callback[0])->{$callback[1]}($arrOptions, $dc);
                 }
@@ -200,7 +207,7 @@ class ContentListener
         }
 
         // HOOK: extend options by callback functions
-        if (isset($GLOBALS['TL_HOOKS']['getContentSourceOptions']) && is_array($GLOBALS['TL_HOOKS']['getContentSourceOptions'])) {
+        if (\isset($GLOBALS['TL_HOOKS']['getContentSourceOptions']) && \is_array($GLOBALS['TL_HOOKS']['getContentSourceOptions'])) {
             foreach ($GLOBALS['TL_HOOKS']['getContentSourceOptions'] as $callback) {
                 $arrOptions = System::importStatic($callback[0])->{$callback[1]}($arrOptions, $dc);
             }
@@ -209,7 +216,7 @@ class ContentListener
         // Add the option currently set
         if ($dc->activeRecord && $dc->activeRecord->source != '') {
             $arrOptions[] = $dc->activeRecord->source;
-            $arrOptions   = array_unique($arrOptions);
+            $arrOptions   = \array_unique($arrOptions);
         }
 
         return $arrOptions;
@@ -218,9 +225,9 @@ class ContentListener
     /**
      * Return all teaser content templates as array
      *
-     * @return array
+     * @Callback(table="tl_content", target="fields.teaserContentTemplate.options")
      */
-    public function getTeaserContentTemplates()
+    public function getTeaserContentTemplates(): array
     {
         return Backend::getTemplateGroup('linkteaser_content_');
     }
