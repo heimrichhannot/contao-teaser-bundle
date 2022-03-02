@@ -13,11 +13,9 @@ namespace HeimrichHannot\ContaoTeaserBundle\DataContainer;
 
 
 use Contao\Backend;
-use Contao\BackendUser;
 use Contao\Config;
 use Contao\ContentModel;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
-use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\DataContainer;
 use Contao\System;
@@ -174,7 +172,7 @@ class ContentContainer
             ];
 
             // HOOK: extend options by callback functions
-            if (\isset($GLOBALS['TL_HOOKS']['getContentSourceOptions']) && \is_array($GLOBALS['TL_HOOKS']['getContentSourceOptions'])) {
+            if (isset($GLOBALS['TL_HOOKS']['getContentSourceOptions']) && \is_array($GLOBALS['TL_HOOKS']['getContentSourceOptions'])) {
                 foreach ($GLOBALS['TL_HOOKS']['getContentSourceOptions'] as $callback) {
                     $arrOptions = System::importStatic($callback[0])->{$callback[1]}($arrOptions, $dc);
                 }
@@ -207,7 +205,7 @@ class ContentContainer
         }
 
         // HOOK: extend options by callback functions
-        if (\isset($GLOBALS['TL_HOOKS']['getContentSourceOptions']) && \is_array($GLOBALS['TL_HOOKS']['getContentSourceOptions'])) {
+        if (isset($GLOBALS['TL_HOOKS']['getContentSourceOptions']) && \is_array($GLOBALS['TL_HOOKS']['getContentSourceOptions'])) {
             foreach ($GLOBALS['TL_HOOKS']['getContentSourceOptions'] as $callback) {
                 $arrOptions = System::importStatic($callback[0])->{$callback[1]}($arrOptions, $dc);
             }

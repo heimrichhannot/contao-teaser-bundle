@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.1] - 2022-03-02
+- Fixed: syntax error ([#15])
+
 ## [2.0.0] - 2022-03-01
 - Added: ce_page_teaser and teaser module contao migrations
 - Changed: minimum php version is now 7.4
@@ -64,53 +67,6 @@ All notable changes to this project will be documented in this file.
 * migration command
 
 
-## [0.3.2] - 2018-03-20
-
-#### Changed
-* enable `target="_blank"` for all link types
-
-## [0.3.1] - 2018-03-19
-
-#### Changed
-* added some polish translations
-
-## [0.3.0] - 2018-03-14
-
-#### Changed
-* linkTitle in LinkTeaserElement is now pageTitle if set
-
-### Fixed
-* removed some deprecation warnings
-* removed unused imports
-
-## [0.2.1] - 2018-09-11
-
-#### Fixed
-* issue #3: `ContentListener` did not get `ContaoFrameworkInterface` invoked
-
-## [0.2.0] - 2018-09-04
-
-#### Added
-* `rel="noopener"` for target="_blank" links (see: https://developers.google.com/web/tools/lighthouse/audits/noopener for more information)
-
-## [0.1.3] - 2018-08-20
-
-#### Fixed
-* Contao 4.5 compatibility
-
-## [0.1.2] - 2018-08-20
-
-#### Fixed
-* debug code in service.yml
-
-## [0.1.1] - 2018-08-16
-
-#### Changed
-* added missing composer dependency
-
-## [0.1.0] - 2018-08-14
-
-Initial version
-
+[#15]: https://github.com/heimrichhannot/contao-teaser-bundle/issues/15
 [#13]: https://github.com/heimrichhannot/contao-teaser-bundle/issues/13
 [#12]: https://github.com/heimrichhannot/contao-teaser-bundle/issues/12
