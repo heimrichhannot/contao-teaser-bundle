@@ -6,6 +6,7 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Migration\MigrationInterface;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception\InvalidFieldNameException;
 use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
 
 class TeaserModuleMigration implements MigrationInterface
@@ -29,10 +30,15 @@ class TeaserModuleMigration implements MigrationInterface
             return false;
         }
 
-        $elements = ContentModel::findBy(
-            [ContentModel::getTable().'.type=?', ContentModel::getTable().'.articleId!=0',],
-            [LinkTeaserElement::TYPE,]
-        );
+        try {
+            $elements = ContentModel::findBy(
+                [ContentModel::getTable().'.type=?', ContentModel::getTable().'.articleId!=0',],
+                [LinkTeaserElement::TYPE,]
+            );
+        } catch (InvalidFieldNameException $exception) {
+            return false;
+        }
+
 
         if (!$elements) {
             return false;

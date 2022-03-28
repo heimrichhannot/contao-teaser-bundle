@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.2] - 2022-03-28
+- Fixed: InvalidFieldNameException at migration in some cases
+- Fixed: missing doctrine/dbal dependency
+
 ## [2.0.1] - 2022-03-02
 - Fixed: syntax error ([#15])
 

@@ -6,6 +6,7 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Migration\MigrationInterface;
 use Contao\CoreBundle\Migration\MigrationResult;
+use Doctrine\DBAL\Exception\InvalidFieldNameException;
 use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
 
 class CePageteaserMigration implements MigrationInterface
@@ -25,12 +26,17 @@ class CePageteaserMigration implements MigrationInterface
     public function shouldRun(): bool
     {
         $this->contaoFramework->initialize();
-        if (ContentModel::findByType('page_teaser')) {
-            return true;
+        try {
+            if (ContentModel::findByType('page_teaser')) {
+                return true;
+            }
+            if (ContentModel::findByType('teaser')) {
+                return true;
+            }
+        } catch (InvalidFieldNameException $exception) {
+            return false;
         }
-        if (ContentModel::findByType('teaser')) {
-            return true;
-        }
+
 
         return false;
     }
