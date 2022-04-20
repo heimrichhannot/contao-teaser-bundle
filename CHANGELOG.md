@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.3] - 2022-04-20
+- Fixed: Typo in linkteaser templates "lable" to "label" 
+
 ## [2.0.2] - 2022-03-28
 - Fixed: InvalidFieldNameException at migration in some cases
 - Fixed: missing doctrine/dbal dependency
