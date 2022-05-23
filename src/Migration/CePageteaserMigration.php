@@ -6,16 +6,19 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Migration\MigrationInterface;
 use Contao\CoreBundle\Migration\MigrationResult;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\InvalidFieldNameException;
 use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
 
 class CePageteaserMigration implements MigrationInterface
 {
     private ContaoFramework $contaoFramework;
+    private Connection      $connection;
 
-    public function __construct(ContaoFramework $contaoFramework)
+    public function __construct(ContaoFramework $contaoFramework, Connection $connection)
     {
         $this->contaoFramework = $contaoFramework;
+        $this->connection = $connection;
     }
 
     public function getName(): string
@@ -25,6 +28,10 @@ class CePageteaserMigration implements MigrationInterface
 
     public function shouldRun(): bool
     {
+        if (!$this->connection->createSchemaManager()->tablesExist(ContentModel::getTable())) {
+            return false;
+        }
+
         $this->contaoFramework->initialize();
         try {
             if (ContentModel::findByType('page_teaser')) {

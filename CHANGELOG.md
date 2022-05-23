@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.4] - 2022-05-23
+- Fixed: migration leads to exception on empty databases
+
 ## [2.0.3] - 2022-04-20
 - Fixed: Typo in linkteaser templates "lable" to "label" 
 
