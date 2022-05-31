@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.5] - 2022-05-31
+- Fixed: migration lead to exception with older doctrine versions
+
 ## [2.0.4] - 2022-05-23
 - Fixed: migration leads to exception on empty databases
 

@@ -28,8 +28,14 @@ class CePageteaserMigration implements MigrationInterface
 
     public function shouldRun(): bool
     {
-        if (!$this->connection->createSchemaManager()->tablesExist(ContentModel::getTable())) {
-            return false;
+        if (method_exists($this->connection, 'createSchemaManager')) {
+            if (!$this->connection->createSchemaManager()->tablesExist(ContentModel::getTable())) {
+                return false;
+            }
+        } else {
+            if (!$this->connection->getSchemaManager()->tablesExist(ContentModel::getTable())) {
+                return false;
+            }
         }
 
         $this->contaoFramework->initialize();
