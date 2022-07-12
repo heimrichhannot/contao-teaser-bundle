@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.6] - 2022-07-12
+- Fixed: return onload callback when data container id is not set
+
 ## [2.0.5] - 2022-05-31
 - Fixed: migration lead to exception with older doctrine versions
 

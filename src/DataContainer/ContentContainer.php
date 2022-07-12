@@ -73,7 +73,7 @@ class ContentContainer
      */
     public function onLoadCallback(DataContainer $dc = null): void
     {
-        if (!$dc || !$dc->id) {
+        if (!$dc || !isset($dc->id)) {
             return;
         }
 
