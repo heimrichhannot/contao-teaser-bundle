@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.7] - 2022-07-22
+- Fixed: missing backend fields
+
 ## [2.0.6] - 2022-07-12
 - Fixed: return onload callback when data container id is not set
 

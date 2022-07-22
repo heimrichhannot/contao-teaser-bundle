@@ -20,20 +20,23 @@ use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\DataContainer;
 use Contao\System;
 use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Security;
 
 class ContentContainer
 {
     const LINK_TEXT_CUSTOM = 'custom';
 
-    private Security        $security;
+    private Security     $security;
+    private RequestStack $requestStack;
 
     /**
      * ContentContainer constructor.
      */
-    public function __construct(Security $security)
+    public function __construct(Security $security, RequestStack $requestStack)
     {
         $this->security = $security;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -73,12 +76,12 @@ class ContentContainer
      */
     public function onLoadCallback(DataContainer $dc = null): void
     {
-        if (!$dc || !isset($dc->id)) {
+        if (!$dc || !$dc->id || 'edit' !== $this->requestStack->getCurrentRequest()->query->get('act')) {
             return;
         }
 
         $contentModel = ContentModel::findByPk($dc->id);
-        if ($contentModel->type !== LinkTeaserElement::TYPE) {
+        if (!$contentModel || $contentModel->type !== LinkTeaserElement::TYPE) {
             return;
         }
 
