@@ -29,27 +29,38 @@ class CePageteaserMigration implements MigrationInterface
     public function shouldRun(): bool
     {
         if (method_exists($this->connection, 'createSchemaManager')) {
-            if (!$this->connection->createSchemaManager()->tablesExist(ContentModel::getTable())) {
-                return false;
-            }
+            $schemaManager = $this->connection->createSchemaManager();
         } else {
-            if (!$this->connection->getSchemaManager()->tablesExist(ContentModel::getTable())) {
-                return false;
-            }
+            $schemaManager = $this->connection->getSchemaManager();
         }
 
+        if (!$schemaManager->tablesExist(ContentModel::getTable())) {
+            return false;
+        }
+        $columns = array_keys($schemaManager->listTableColumns(ContentModel::getTable()));
+
         $this->contaoFramework->initialize();
+
+        if (in_array('teaser_page_link', $columns)) {
+            try {
+                if (ContentModel::findBy(['type=?', 'teaser_page_link=?'], ['teaser', '1'])) {
+                    return true;
+                }
+            } catch (InvalidFieldNameException $exception) {}
+        }
+        if (in_array('teaser_fragment_identifier', $columns)) {
+            try {
+                if (ContentModel::findBy(['type=?', 'teaser_fragment_identifier=?'], ['teaser', '1'])) {
+                    return true;
+                }
+            } catch (InvalidFieldNameException $exception) {}
+        }
+
         try {
             if (ContentModel::findByType('page_teaser')) {
                 return true;
             }
-            if (ContentModel::findByType('teaser')) {
-                return true;
-            }
-        } catch (InvalidFieldNameException $exception) {
-            return false;
-        }
-
+        } catch (InvalidFieldNameException $exception) {}
 
         return false;
     }
@@ -93,6 +104,9 @@ class CePageteaserMigration implements MigrationInterface
             }
         }
 
-        return new MigrationResult(true, "ce_page_teaser Migration successfull! Migrated $pageTeaserCount page_teaser and $articleTeaserCount teaser elements.");
+        return new MigrationResult(
+            true,
+            "ce_page_teaser Migration successfull! Migrated $pageTeaserCount page_teaser and $articleTeaserCount teaser elements."
+        );
     }
 }
