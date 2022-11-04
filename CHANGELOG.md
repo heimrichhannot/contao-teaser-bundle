@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.8] - 2022-11-04
+- Fixed: page teaser migration always triggers in some circumstances
+
 ## [2.0.7] - 2022-07-22
 - Fixed: missing backend fields
 
