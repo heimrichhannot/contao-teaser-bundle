@@ -81,7 +81,7 @@ class LinkTeaserElement extends ContentText
         if (ContentContainer::LINK_TEXT_CUSTOM === $this->teaserLinkText) {
             $this->label = $this->linkTitle;
         } else {
-            $this->label = $GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext'][$this->teaserLinkText];
+            $this->label = ($GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext'][$this->teaserLinkText] ?? '');
         }
         $this->setLink(is_array($this->label) ? $this->label[0] : $this->label);
 

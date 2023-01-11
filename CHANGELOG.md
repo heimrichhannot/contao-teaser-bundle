@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.9] - 2023-01-11
+- Fixed: warning with php 8
+
 ## [2.0.8] - 2022-11-04
 - Fixed: page teaser migration always triggers in some circumstances
 
