@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.10] - 2023-03-14
+- Fixed: exception in CePageteaserMigration
+
 ## [2.0.9] - 2023-01-11
 - Fixed: warning with php 8
 

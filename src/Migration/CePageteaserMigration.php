@@ -40,17 +40,19 @@ class CePageteaserMigration implements MigrationInterface
         $columns = array_keys($schemaManager->listTableColumns(ContentModel::getTable()));
 
         $this->contaoFramework->initialize();
+        $t = ContentModel::getTable();
 
         if (in_array('teaser_page_link', $columns)) {
             try {
-                if (ContentModel::findBy(['type=?', 'teaser_page_link=?'], ['teaser', '1'])) {
+
+                if (ContentModel::findBy(["$t.type=?", "$t.teaser_page_link=?"], ['teaser', '1'])) {
                     return true;
                 }
             } catch (InvalidFieldNameException $exception) {}
         }
         if (in_array('teaser_fragment_identifier', $columns)) {
             try {
-                if (ContentModel::findBy(['type=?', 'teaser_fragment_identifier=?'], ['teaser', '1'])) {
+                if (ContentModel::findBy(["$t.type=?", "$t.teaser_fragment_identifier=?"], ['teaser', '1'])) {
                     return true;
                 }
             } catch (InvalidFieldNameException $exception) {}
