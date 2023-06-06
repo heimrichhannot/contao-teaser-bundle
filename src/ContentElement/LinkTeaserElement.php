@@ -143,7 +143,7 @@ class LinkTeaserElement extends ContentText
         $this->Template->href      = $this->getHref();
         $this->Template->linkClass = static::LINK_CSS_CLASS . ($this->teaserLinkCssClass ? ' ' . $this->teaserLinkCssClass : '');
 
-        if ($this->target)
+        if ($objPage && $this->target)
         {
             $this->Template->target = (($objPage->outputFormat == 'xhtml') ? ' onclick="return !window.open(this.href)"' : ' target="_blank"');
             $this->addLinkAttribute('rel', 'noopener');

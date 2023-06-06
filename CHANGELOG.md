@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.11] - 2023-06-06
+- Fixed: warning in backend
+
 ## [2.0.10] - 2023-03-14
 - Fixed: exception in CePageteaserMigration
 
