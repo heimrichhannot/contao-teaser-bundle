@@ -28,15 +28,15 @@ class CePageteaserMigration implements MigrationInterface
 
     public function shouldRun(): bool
     {
-        if (method_exists($this->connection, 'createSchemaManager')) {
-            $schemaManager = $this->connection->createSchemaManager();
-        } else {
-            $schemaManager = $this->connection->getSchemaManager();
-        }
+        $schemaManager = $this->getSchemaManager();
 
         if (!$schemaManager->tablesExist(ContentModel::getTable())) {
             return false;
         }
+        if (!in_array(strtolower('teaserLinkBehaviour'), array_keys($schemaManager->listTableColumns(ContentModel::getTable())))) {
+            return false;
+        }
+
         $columns = array_keys($schemaManager->listTableColumns(ContentModel::getTable()));
 
         $this->contaoFramework->initialize();
@@ -69,6 +69,11 @@ class CePageteaserMigration implements MigrationInterface
 
     public function run(): MigrationResult
     {
+        $schemaManager = $this->getSchemaManager();
+        if (!in_array(strtolower('teaserLinkBehaviour'), array_keys($schemaManager->listTableColumns(ContentModel::getTable())))) {
+            return new MigrationResult(false, "Ce Page Teaser Migration needs schema update before running.");
+        }
+
         $pageTeaser = ContentModel::findByType('page_teaser');
         $articleTeaser = ContentModel::findByType('teaser');
 
@@ -110,5 +115,19 @@ class CePageteaserMigration implements MigrationInterface
             true,
             "ce_page_teaser Migration successfull! Migrated $pageTeaserCount page_teaser and $articleTeaserCount teaser elements."
         );
+    }
+
+    /**
+     * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
+     * @throws \Doctrine\DBAL\Exception
+     */
+    protected function getSchemaManager(): \Doctrine\DBAL\Schema\AbstractSchemaManager
+    {
+        if (method_exists($this->connection, 'createSchemaManager')) {
+            $schemaManager = $this->connection->createSchemaManager();
+        } else {
+            $schemaManager = $this->connection->getSchemaManager();
+        }
+        return $schemaManager;
     }
 }

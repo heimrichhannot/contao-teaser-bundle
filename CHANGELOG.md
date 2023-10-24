@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.12] - 2023-10-24
+- Fixed: issue in page teaser migration
+
 ## [2.0.11] - 2023-06-06
 - Fixed: warning in backend
 
