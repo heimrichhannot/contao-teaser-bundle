@@ -23,7 +23,6 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class Plugin implements BundlePluginInterface, ConfigPluginInterface
 {
-
     /**
      * Gets a list of autoload configurations for this bundle.
      *
@@ -31,7 +30,7 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
      *
      * @return ConfigInterface[]
      */
-    public function getBundles(ParserInterface $parser)
+    public function getBundles(ParserInterface $parser): array
     {
         return [
             BundleConfig::create(HeimrichHannotTeaserBundle::class)
@@ -47,7 +46,7 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
      *
      * @throws \Exception
      */
-    public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig)
+    public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig): void
     {
         $loader->load('@HeimrichHannotTeaserBundle/Resources/config/services.yml');
     }

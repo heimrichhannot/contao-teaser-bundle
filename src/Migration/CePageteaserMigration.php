@@ -8,6 +8,7 @@ use Contao\CoreBundle\Migration\MigrationInterface;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\InvalidFieldNameException;
+use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
 
 class CePageteaserMigration implements MigrationInterface
@@ -44,7 +45,6 @@ class CePageteaserMigration implements MigrationInterface
 
         if (in_array('teaser_page_link', $columns)) {
             try {
-
                 if (ContentModel::findBy(["$t.type=?", "$t.teaser_page_link=?"], ['teaser', '1'])) {
                     return true;
                 }
@@ -118,14 +118,15 @@ class CePageteaserMigration implements MigrationInterface
     }
 
     /**
-     * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
+     * @return AbstractSchemaManager
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function getSchemaManager(): \Doctrine\DBAL\Schema\AbstractSchemaManager
+    protected function getSchemaManager(): AbstractSchemaManager
     {
         if (method_exists($this->connection, 'createSchemaManager')) {
             $schemaManager = $this->connection->createSchemaManager();
         } else {
+            /** @noinspection PhpDeprecationInspection */
             $schemaManager = $this->connection->getSchemaManager();
         }
         return $schemaManager;

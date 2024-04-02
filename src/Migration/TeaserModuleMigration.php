@@ -25,7 +25,7 @@ class TeaserModuleMigration implements MigrationInterface
 
     public function shouldRun(): bool
     {
-        $columns = $this->connection->getSchemaManager()->listTableColumns(ContentModel::getTable());
+        $columns = $this->connection->createSchemaManager()->listTableColumns(ContentModel::getTable());
         if (!array_key_exists('articleid', $columns)) {
             return false;
         }
