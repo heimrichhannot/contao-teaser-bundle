@@ -115,7 +115,7 @@ class LinkTeaserElement extends ContentText
             {
                 $showMore = System::importStatic($callback[0])->{$callback[1]}($this, $this->showMore);
             }
-            $this->showMore = $showMore;
+            $this->showMore = $showMore ?? null;
         }
 
 
@@ -203,7 +203,9 @@ class LinkTeaserElement extends ContentText
         $objT = new FrontendTemplate($strTemplate);
         $objT->setData($this->Template->getData());
         // background images dont have width/height in backend view
-        $objT->background = (TL_MODE == 'BE' ? false : $objT->background);
+        $objT->background = System::getContainer()->get(Utils::class)->container()->isBackend()
+            ? false
+            : $objT->background;
 
         if($this->isActive())
         {
