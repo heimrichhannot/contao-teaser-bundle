@@ -8,9 +8,7 @@
  * @license http://www.gnu.org/licences/lgpl-3.0.html LGPL
  */
 
-
 namespace HeimrichHannot\ContaoTeaserBundle\DataContainer;
-
 
 use Contao\Backend;
 use Contao\Config;
@@ -41,8 +39,9 @@ class ContentContainer
 
     /**
      * @Callback(table="tl_content", target="fields.teaserLinkText.options")
+     * @noinspection PhpUnused
      */
-    public function getTeaserLinkText()
+    public function getTeaserLinkText(): array
     {
         $arrOptions = [
             static::LINK_TEXT_CUSTOM => $GLOBALS['TL_LANG']['MSC']['linkteaser']['customLinkText'],
@@ -139,9 +138,10 @@ class ContentContainer
      *
      * @Callback(table="tl_content", target="fields.fileSRC.load")
      *
-     * @param mixed $value
+     * @template T
+     * @param T $value
      * @param DataContainer $dc
-     * @return mixed
+     * @return T
      */
     public function setFileSrcFlags($value, $dc)
     {

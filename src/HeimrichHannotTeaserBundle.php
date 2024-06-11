@@ -8,13 +8,10 @@
  * @license http://www.gnu.org/licences/lgpl-3.0.html LGPL
  */
 
-
 namespace HeimrichHannot\ContaoTeaserBundle;
-
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class HeimrichHannotTeaserBundle extends Bundle
 {
-
 }

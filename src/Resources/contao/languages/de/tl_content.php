@@ -8,6 +8,8 @@
  * @license http://www.gnu.org/licences/lgpl-3.0.html LGPL
  */
 
+use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
+
 /**
  * Fields
  */
@@ -31,7 +33,6 @@ $GLOBALS['TL_LANG']['tl_content']['teaserContentTemplate'][1] = 'Überschreiben 
 
 $GLOBALS['TL_LANG']['tl_content']['linkTitle']['huh_teaser'] = 'Geben Sie hier einen benutzerdefinierten Weiterlesen-Link Text an.';
 
-
 /**
  * Legends
  */
@@ -40,10 +41,10 @@ $GLOBALS['TL_LANG']['tl_content']['teaser_legend']= 'Teaser-Einstellungen';
 /**
  * References
  */
-$GLOBALS['TL_LANG']['tl_content']['reference']['source'][\HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement::SOURCE_PAGE] = 'Seite';
+$GLOBALS['TL_LANG']['tl_content']['reference']['source'][LinkTeaserElement::SOURCE_PAGE] = 'Seite';
 $GLOBALS['TL_LANG']['tl_content']['reference']['source']['file'] = 'Datei';
 $GLOBALS['TL_LANG']['tl_content']['reference']['source']['download'] = 'Download';
-$GLOBALS['TL_LANG']['tl_content']['reference']['source'][\HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement::SOURCE_ARTICLE] = 'Artikel';
+$GLOBALS['TL_LANG']['tl_content']['reference']['source'][LinkTeaserElement::SOURCE_ARTICLE] = 'Artikel';
 $GLOBALS['TL_LANG']['tl_content']['reference']['source']['external'] = 'Externe URL';
 
 $GLOBALS['TL_LANG']['tl_content']['reference']['teaserLinkBehaviour']['default'] = 'Standard - Link anzeigen';

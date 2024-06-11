@@ -19,12 +19,14 @@ use Contao\ContentText;
 use Contao\Controller;
 use Contao\Environment;
 use Contao\File;
+use Contao\FilesModel;
 use Contao\FrontendTemplate;
 use Contao\Input;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
 use HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentContainer;
+use HeimrichHannot\UtilsBundle\Util\Utils;
 
 class LinkTeaserElement extends ContentText
 {
@@ -113,13 +115,13 @@ class LinkTeaserElement extends ContentText
             {
                 $showMore = System::importStatic($callback[0])->{$callback[1]}($this, $this->showMore);
             }
-            $this->showMore = $showMore;
+            $this->showMore = $showMore ?? null;
         }
 
 
         if (!$this->showMore)
         {
-            if (System::getContainer()->get('huh.utils.container')->isDev()) {
+            if (System::getContainer()->get(Utils::class)->container()->isDev()) {
                 $this->content = '<!-- Teaser Bundle: Source was not found or hook returned false (showMore = false) -->';
             }
             return;
@@ -165,7 +167,7 @@ class LinkTeaserElement extends ContentText
      */
     protected function generateContent()
     {
-        if (System::getContainer()->get('huh.utils.container')->isBackend()) {
+        if (System::getContainer()->get(Utils::class)->container()->isBackend()) {
             Controller::loadDataContainer('tl_content');
             $template = new BackendTemplate('be_wildcard');
             $template->title = $this->headline;
@@ -201,7 +203,9 @@ class LinkTeaserElement extends ContentText
         $objT = new FrontendTemplate($strTemplate);
         $objT->setData($this->Template->getData());
         // background images dont have width/height in backend view
-        $objT->background = (TL_MODE == 'BE' ? false : $objT->background);
+        $objT->background = System::getContainer()->get(Utils::class)->container()->isBackend()
+            ? false
+            : $objT->background;
 
         if($this->isActive())
         {
@@ -238,7 +242,7 @@ class LinkTeaserElement extends ContentText
             $this->target = true;
         }
 
-        $this->setHref(Controller::generateFrontendUrl($objTarget->row(), null, null, $this->target));
+        $this->setHref($objTarget->getAbsoluteUrl());
 
         // remove alias from root pages
         if ($objTarget->type == 'root')
@@ -249,8 +253,9 @@ class LinkTeaserElement extends ContentText
         $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['pageTitle'], $objTarget->pageTitle ?: $objTarget->title));
         $this->setLink(sprintf($this->getLink(), $objTarget->title));
 
+        $utils = System::getContainer()->get(Utils::class);
 
-        if(TL_MODE == 'FE' && $objPage !== null)
+        if($utils->container()->isFrontend() && $objPage !== null)
         {
             if ($objPage->id == $objTarget->id)
             {
@@ -272,7 +277,8 @@ class LinkTeaserElement extends ContentText
      */
     protected function handleFile()
     {
-        $objFile = System::getContainer()->get('huh.utils.file')->getFileFromUuid($this->fileSRC);
+        $utils = System::getContainer()->get(Utils::class);
+        $objFile = new File($utils->file()->getPathFromUuid($this->fileSRC));
 
         if ($objFile === null)
         {
@@ -295,7 +301,8 @@ class LinkTeaserElement extends ContentText
      */
     protected function handleDownload()
     {
-        $objFile = System::getContainer()->get('huh.utils.file')->getFileFromUuid($this->fileSRC);
+        $utils = System::getContainer()->get(Utils::class);
+        $objFile = new File($utils->file()->getPathFromUuid($this->fileSRC));
 
         if ($objFile === null)
         {
@@ -328,11 +335,12 @@ class LinkTeaserElement extends ContentText
             $this->setHref(preg_replace('/(&(amp;)?|\?)file=[^&]+/', '', $this->getHref()));
         }
 
-        $this->setHref(
-            $this->getHref() . ((Config::get('disableAlias') || strpos($this->getHref(), '?') !== false) ? '&amp;' : '?') . 'file=' . System::urlEncode(
-                $objFile->path
-            )
-        );
+        $this->setHref(sprintf(
+            '%s%sfile=%s',
+            $this->getHref(),
+            ((Config::get('disableAlias') || strpos($this->getHref(), '?') !== false) ? '&amp;' : '?'),
+            System::urlEncode($objFile->path)
+        ));
         $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['downloadTitle'], $arrMeta['title']));
         $this->setLink(sprintf($this->getLink(), $arrMeta['title']));
 
@@ -365,7 +373,9 @@ class LinkTeaserElement extends ContentText
 
         $strParams = '/articles/' . ((!Config::get('disableAlias') && $objArticle->alias != '') ? $objArticle->alias : $objArticle->id);
 
-        $this->setHref(ampersand(Controller::generateFrontendUrl($objTarget->row(), $strParams, null, $this->target)));
+        $rootPage = PageModel::findByPk($objTarget->rootId);
+
+        $this->setHref(StringUtil::ampersand($rootPage->getFrontendUrl($strParams)));
         $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['articleTitle'], $objArticle->title));
         $this->setLink(sprintf($this->getLink(), $objArticle->title));
 
@@ -384,7 +394,7 @@ class LinkTeaserElement extends ContentText
             return false;
         }
 
-        if (substr($this->url, 0, 7) == 'mailto:')
+        if (str_starts_with($this->url, 'mailto:'))
         {
             $this->setHref(StringUtil::encodeEmail($this->url));
             $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['externalMailTitle'], $this->getHref()));
@@ -392,7 +402,7 @@ class LinkTeaserElement extends ContentText
         }
         else
         {
-            $this->setHref(ampersand($this->url));
+            $this->setHref(StringUtil::ampersand($this->url));
             $strLinkTitle = $this->getLinkTitle($this->getHref());
             $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['externalLinkTitle'], $strLinkTitle));
             $this->setLink(sprintf($this->getLink(), $strLinkTitle));
@@ -440,7 +450,7 @@ class LinkTeaserElement extends ContentText
     protected function getLinkTitle($strHref)
     {
         // Replace inserttag links with title
-        if (strpos($strHref, '{{') === false || strpos($strHref, '}}') === false)
+        if (!str_contains($strHref, '{{') || !str_contains($strHref, '}}'))
         {
             return $strHref;
         }
