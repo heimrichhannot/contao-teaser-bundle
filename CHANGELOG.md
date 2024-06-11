@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2024-06-11
+- Added: contao 5 support
+- Changed: minimum php version is now 8.0
+- Changed: update bundle structure
+
 ## [2.0.12] - 2023-10-24
 - Fixed: issue in page teaser migration
 

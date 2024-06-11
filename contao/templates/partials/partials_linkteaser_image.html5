@@ -15,4 +15,5 @@ if (!$this->linkAll && $this->overwriteMeta && $this->imageUrl) {
 if ($this->caption) {
     $image['caption'] = $this->caption;
 }
-$this->insert('partials_linkimage', $image);
+
+$this->insert('image', $image);
