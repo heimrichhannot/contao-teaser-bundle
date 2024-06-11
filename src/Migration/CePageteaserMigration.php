@@ -48,21 +48,21 @@ class CePageteaserMigration implements MigrationInterface
                 if (ContentModel::findBy(["$t.type=?", "$t.teaser_page_link=?"], ['teaser', '1'])) {
                     return true;
                 }
-            } catch (InvalidFieldNameException $exception) {}
+            } catch (InvalidFieldNameException) {}
         }
         if (in_array('teaser_fragment_identifier', $columns)) {
             try {
                 if (ContentModel::findBy(["$t.type=?", "$t.teaser_fragment_identifier=?"], ['teaser', '1'])) {
                     return true;
                 }
-            } catch (InvalidFieldNameException $exception) {}
+            } catch (InvalidFieldNameException) {}
         }
 
         try {
             if (ContentModel::findByType('page_teaser')) {
                 return true;
             }
-        } catch (InvalidFieldNameException $exception) {}
+        } catch (InvalidFieldNameException) {}
 
         return false;
     }

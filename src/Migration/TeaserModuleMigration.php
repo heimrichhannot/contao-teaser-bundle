@@ -35,7 +35,7 @@ class TeaserModuleMigration implements MigrationInterface
                 [ContentModel::getTable().'.type=?', ContentModel::getTable().'.articleId!=0',],
                 [LinkTeaserElement::TYPE,]
             );
-        } catch (InvalidFieldNameException $exception) {
+        } catch (InvalidFieldNameException) {
             return false;
         }
 

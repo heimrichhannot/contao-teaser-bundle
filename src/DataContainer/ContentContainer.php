@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\Security;
 
 class ContentContainer
 {
-    const LINK_TEXT_CUSTOM = 'custom';
+    public const LINK_TEXT_CUSTOM = 'custom';
 
     private Security     $security;
     private RequestStack $requestStack;
@@ -87,7 +87,7 @@ class ContentContainer
         // update core fields
         $dca                                                = &$GLOBALS['TL_DCA']['tl_content'];
         $dca['fields']['text']['eval']['mandatory']         = false;
-        $dca['fields']['target']['load_callback'][]         = [__CLASS__, 'setTargetFlags'];
+        $dca['fields']['target']['load_callback'][]         = [self::class, 'setTargetFlags'];
         $dca['fields']['article']['label']                  = &$GLOBALS['TL_LANG']['tl_content']['articleId'];
         $dca['fields']['article']['eval']['submitOnChange'] = false;
         $dca['fields']['linkTitle']['label'][1]             = $GLOBALS['TL_LANG']['tl_content']['linkTitle']['huh_teaser'];
@@ -115,12 +115,10 @@ class ContentContainer
     /**
      * Dynamically add flags to the "target" field
      *
-     * @param mixed $varValue
      * @param DataContainer $dc
-     *
      * @return mixed
      */
-    public function setTargetFlags($varValue, DataContainer $dc)
+    public function setTargetFlags(mixed $varValue, DataContainer $dc)
     {
         if ($dc->activeRecord) {
             switch ($dc->activeRecord->source) {

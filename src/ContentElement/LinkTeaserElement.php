@@ -30,14 +30,14 @@ use HeimrichHannot\UtilsBundle\Util\Utils;
 
 class LinkTeaserElement extends ContentText
 {
-    const TYPE = 'linkteaser';
+    public const TYPE = 'linkteaser';
 
-    const SOURCE_PAGE = 'page';
-    const SOURCE_ARTICLE = 'article';
+    public const SOURCE_PAGE = 'page';
+    public const SOURCE_ARTICLE = 'article';
 
-    const LINK_BEHAVIOUR_SHOW_LINK = 'default';
-    const LINK_BEHAVIOUR_LINK_ALL = 'linkAll';
-    const LINK_BEHAVIOUR_HIDE_LINK = 'hideLink';
+    public const LINK_BEHAVIOUR_SHOW_LINK = 'default';
+    public const LINK_BEHAVIOUR_LINK_ALL = 'linkAll';
+    public const LINK_BEHAVIOUR_HIDE_LINK = 'hideLink';
 
     /**
      * Template
@@ -62,9 +62,9 @@ class LinkTeaserElement extends ContentText
 
     protected $linkTemplate = 'linkteaser_link_default';
 
-    protected $arrLinkAttributes = array();
+    protected $arrLinkAttributes = [];
 
-    const LINK_CSS_CLASS = 'more';
+    public const LINK_CSS_CLASS = 'more';
 
     protected function compile()
     {
@@ -87,26 +87,14 @@ class LinkTeaserElement extends ContentText
         }
         $this->setLink(is_array($this->label) ? $this->label[0] : $this->label);
 
-        switch ($this->source)
-        {
-            case 'page':
-                $this->showMore = $this->handlePage();
-                break;
-            case 'file':
-                $this->showMore = $this->handleFile();
-                break;
-            case 'download':
-                $this->showMore = $this->handleDownload();
-                break;
-            case 'article':
-                $this->showMore = $this->handleArticle();
-                break;
-            case 'external':
-                $this->showMore = $this->handleExternal();
-                break;
-            default:
-                $this->showMore = false;
-        }
+        $this->showMore = match ($this->source) {
+            'page' => $this->handlePage(),
+            'file' => $this->handleFile(),
+            'download' => $this->handleDownload(),
+            'article' => $this->handleArticle(),
+            'external' => $this->handleExternal(),
+            default => false,
+        };
 
         // HOOK: extend teaser link by callback functions
         if (isset($GLOBALS['TL_HOOKS']['generateTeaserLink']) && is_array($GLOBALS['TL_HOOKS']['generateTeaserLink']))
@@ -338,7 +326,7 @@ class LinkTeaserElement extends ContentText
         $this->setHref(sprintf(
             '%s%sfile=%s',
             $this->getHref(),
-            ((Config::get('disableAlias') || strpos($this->getHref(), '?') !== false) ? '&amp;' : '?'),
+            ((Config::get('disableAlias') || str_contains($this->getHref(), '?')) ? '&amp;' : '?'),
             System::urlEncode($objFile->path)
         ));
         $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['downloadTitle'], $arrMeta['title']));
@@ -354,7 +342,7 @@ class LinkTeaserElement extends ContentText
      */
     protected function handleArticle()
     {
-        if (($objArticle = ArticleModel::findPublishedById($this->article, array('eager' => true))) === null)
+        if (($objArticle = ArticleModel::findPublishedById($this->article, ['eager' => true])) === null)
         {
             return false;
         }
@@ -455,7 +443,7 @@ class LinkTeaserElement extends ContentText
             return $strHref;
         }
 
-        $arrTag = StringUtil::trimsplit('::', str_replace(array('{{', '}}'), '', $strHref));
+        $arrTag = StringUtil::trimsplit('::', str_replace(['{{', '}}'], '', $strHref));
 
         if (empty($arrTag) || $arrTag[0] == '' || $arrTag[1] == '')
         {
@@ -482,7 +470,7 @@ class LinkTeaserElement extends ContentText
         $this->arrData['cssID'][1] .= ' ' . $strClass;
     }
 
-    public function setHref($varValue)
+    public function setHref($varValue): void
     {
         $this->strHref = $varValue;
     }
@@ -492,7 +480,7 @@ class LinkTeaserElement extends ContentText
         return $this->strHref;
     }
 
-    public function setTitle($varValue)
+    public function setTitle($varValue): void
     {
         $this->strTitle = $varValue;
     }
@@ -502,7 +490,7 @@ class LinkTeaserElement extends ContentText
         return $this->strTitle;
     }
 
-    public function setLink($varValue)
+    public function setLink($varValue): void
     {
         $this->strLink = $varValue;
     }
@@ -512,7 +500,7 @@ class LinkTeaserElement extends ContentText
         return $this->strLink;
     }
 
-    public function setLinkTemplate($varValue)
+    public function setLinkTemplate($varValue): void
     {
         $this->linkTemplate = $varValue;
     }
@@ -530,10 +518,7 @@ class LinkTeaserElement extends ContentText
         return $this->blnActive;
     }
 
-    /**
-     * @param mixed $blnActive
-     */
-    public function setActive($blnActive)
+    public function setActive(mixed $blnActive): void
     {
         $this->blnActive = $blnActive;
     }
@@ -546,17 +531,14 @@ class LinkTeaserElement extends ContentText
         return $this->blnTrail;
     }
 
-    /**
-     * @param mixed $blnTrail
-     */
-    public function setTrail($blnTrail)
+    public function setTrail(mixed $blnTrail): void
     {
         $this->blnTrail = $blnTrail;
     }
 
 
 
-    public function setLinkAttributes($arrData, $delimiter = " ")
+    public function setLinkAttributes($arrData, $delimiter = " "): void
     {
         // set from string
         if (!is_array($arrData))
@@ -594,12 +576,12 @@ class LinkTeaserElement extends ContentText
         return $strAttributes;
     }
 
-    public function addLinkAttribute($key, $value)
+    public function addLinkAttribute($key, $value): void
     {
         $this->arrLinkAttributes[$key] = $value;
     }
 
-    public function removeLinkAttribute($key)
+    public function removeLinkAttribute($key): void
     {
         unset($this->arrLinkAttributes);
     }
