@@ -242,11 +242,7 @@ class LinkTeaserElement extends ContentText
             $this->target = true;
         }
 
-        // previously:
-        //   $this->setHref(Controller::generateFrontendUrl($objTarget->row(), null, null, $this->target));
-        // replaced with:
-        $rootPage = PageModel::findByPk($objTarget->rootId);
-        $this->setHref($rootPage->getFrontendUrl());
+        $this->setHref($objTarget->getAbsoluteUrl());
 
         // remove alias from root pages
         if ($objTarget->type == 'root')
