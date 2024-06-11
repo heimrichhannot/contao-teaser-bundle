@@ -32,20 +32,19 @@ class TeaserModuleMigration implements MigrationInterface
 
         try {
             $elements = ContentModel::findBy(
-                [ContentModel::getTable().'.type=?', ContentModel::getTable().'.articleId!=0',],
-                [LinkTeaserElement::TYPE,]
+                [ContentModel::getTable() . '.type=?', ContentModel::getTable() . '.articleId!=0'],
+                [LinkTeaserElement::TYPE]
             );
         } catch (InvalidFieldNameException) {
             return false;
         }
-
 
         if (!$elements) {
             return false;
         }
 
         foreach ($elements as $element) {
-            if ((int)$element->article === 0) {
+            if ((int) $element->article === 0) {
                 return true;
             }
         }
@@ -56,8 +55,8 @@ class TeaserModuleMigration implements MigrationInterface
     public function run(): MigrationResult
     {
         $elements = ContentModel::findBy(
-            [ContentModel::getTable().'.type=?', ContentModel::getTable().'.articleId!=0',],
-            [LinkTeaserElement::TYPE,]
+            [ContentModel::getTable() . '.type=?', ContentModel::getTable() . '.articleId!=0'],
+            [LinkTeaserElement::TYPE]
         );
 
         if (!$elements) {
@@ -66,7 +65,7 @@ class TeaserModuleMigration implements MigrationInterface
 
         $elementCount = 0;
         foreach ($elements as $element) {
-            if ((int)$element->article === 0) {
+            if ((int) $element->article === 0) {
                 $element->article = $element->articleId;
                 $element->articleId = 0;
                 $element->save();

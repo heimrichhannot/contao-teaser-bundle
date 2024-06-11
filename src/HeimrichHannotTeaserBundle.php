@@ -18,5 +18,4 @@ class HeimrichHannotTeaserBundle extends Bundle
     {
         return \dirname(__DIR__);
     }
-
 }

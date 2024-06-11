@@ -25,12 +25,10 @@ class ContentContainer
 {
     public const LINK_TEXT_CUSTOM = 'custom';
 
-    private Security     $security;
+    private Security $security;
+
     private RequestStack $requestStack;
 
-    /**
-     * ContentContainer constructor.
-     */
     public function __construct(Security $security, RequestStack $requestStack)
     {
         $this->security = $security;
@@ -53,7 +51,9 @@ class ContentContainer
             return $arrOptions;
         }
 
-        $options = [$GLOBALS['TL_LANG']['MSC']['linkteaser']['customLinkText'] => $arrOptions];
+        $options = [
+            $GLOBALS['TL_LANG']['MSC']['linkteaser']['customLinkText'] => $arrOptions,
+        ];
 
         $arrOptions = [];
 
@@ -85,12 +85,12 @@ class ContentContainer
         }
 
         // update core fields
-        $dca                                                = &$GLOBALS['TL_DCA']['tl_content'];
-        $dca['fields']['text']['eval']['mandatory']         = false;
-        $dca['fields']['target']['load_callback'][]         = [self::class, 'setTargetFlags'];
-        $dca['fields']['article']['label']                  = &$GLOBALS['TL_LANG']['tl_content']['articleId'];
+        $dca = &$GLOBALS['TL_DCA']['tl_content'];
+        $dca['fields']['text']['eval']['mandatory'] = false;
+        $dca['fields']['target']['load_callback'][] = [self::class, 'setTargetFlags'];
+        $dca['fields']['article']['label'] = &$GLOBALS['TL_LANG']['tl_content']['articleId'];
         $dca['fields']['article']['eval']['submitOnChange'] = false;
-        $dca['fields']['linkTitle']['label'][1]             = $GLOBALS['TL_LANG']['tl_content']['linkTitle']['huh_teaser'];
+        $dca['fields']['linkTitle']['label'][1] = $GLOBALS['TL_LANG']['tl_content']['linkTitle']['huh_teaser'];
 
         if (static::LINK_TEXT_CUSTOM === $contentModel->teaserLinkText) {
             PaletteManipulator::create()
@@ -102,12 +102,14 @@ class ContentContainer
         if ($contentModel->source) {
             $dca['palettes'][LinkTeaserElement::TYPE] = \str_replace(
                 ',source,',
-                ',source,' . $dca['subpalettes']['source_' . $contentModel->source] . ',', $dca['palettes'][LinkTeaserElement::TYPE]
+                ',source,' . $dca['subpalettes']['source_' . $contentModel->source] . ',',
+                $dca['palettes'][LinkTeaserElement::TYPE]
             );
         } else {
             $dca['palettes'][LinkTeaserElement::TYPE] = \str_replace(
                 ',source,',
-                ',source,' . $dca['subpalettes']['source_page'] . ',', $dca['palettes'][LinkTeaserElement::TYPE]
+                ',source,' . $dca['subpalettes']['source_page'] . ',',
+                $dca['palettes'][LinkTeaserElement::TYPE]
             );
         }
     }
@@ -115,7 +117,6 @@ class ContentContainer
     /**
      * Dynamically add flags to the "target" field
      *
-     * @param DataContainer $dc
      * @return mixed
      */
     public function setTargetFlags(mixed $varValue, DataContainer $dc)
@@ -169,7 +170,7 @@ class ContentContainer
                 'file',
                 'download',
                 LinkTeaserElement::SOURCE_ARTICLE,
-                'external'
+                'external',
             ];
 
             // HOOK: extend options by callback functions
@@ -215,7 +216,7 @@ class ContentContainer
         // Add the option currently set
         if ($dc->activeRecord && $dc->activeRecord->source != '') {
             $arrOptions[] = $dc->activeRecord->source;
-            $arrOptions   = \array_unique($arrOptions);
+            $arrOptions = \array_unique($arrOptions);
         }
 
         return $arrOptions;

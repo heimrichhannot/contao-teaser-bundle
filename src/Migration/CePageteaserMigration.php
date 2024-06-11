@@ -14,7 +14,8 @@ use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
 class CePageteaserMigration implements MigrationInterface
 {
     private ContaoFramework $contaoFramework;
-    private Connection      $connection;
+
+    private Connection $connection;
 
     public function __construct(ContaoFramework $contaoFramework, Connection $connection)
     {
@@ -48,21 +49,24 @@ class CePageteaserMigration implements MigrationInterface
                 if (ContentModel::findBy(["$t.type=?", "$t.teaser_page_link=?"], ['teaser', '1'])) {
                     return true;
                 }
-            } catch (InvalidFieldNameException) {}
+            } catch (InvalidFieldNameException) {
+            }
         }
         if (in_array('teaser_fragment_identifier', $columns)) {
             try {
                 if (ContentModel::findBy(["$t.type=?", "$t.teaser_fragment_identifier=?"], ['teaser', '1'])) {
                     return true;
                 }
-            } catch (InvalidFieldNameException) {}
+            } catch (InvalidFieldNameException) {
+            }
         }
 
         try {
             if (ContentModel::findByType('page_teaser')) {
                 return true;
             }
-        } catch (InvalidFieldNameException) {}
+        } catch (InvalidFieldNameException) {
+        }
 
         return false;
     }
@@ -81,8 +85,7 @@ class CePageteaserMigration implements MigrationInterface
         $articleTeaserCount = 0;
 
         if ($pageTeaser) {
-            foreach ($pageTeaser as $teaser)
-            {
+            foreach ($pageTeaser as $teaser) {
                 $teaser->type = LinkTeaserElement::TYPE;
                 $teaser->source = LinkTeaserElement::SOURCE_PAGE;
                 $teaser->jumpTo = $teaser->page_teaser_page;
@@ -96,15 +99,12 @@ class CePageteaserMigration implements MigrationInterface
             }
         }
 
-        if ($articleTeaser)
-        {
-            foreach ($articleTeaser as $teaser)
-            {
-                if (!$teaser->teaser_page_link && !$teaser->teaser_fragment_identifier)
-                {
+        if ($articleTeaser) {
+            foreach ($articleTeaser as $teaser) {
+                if (!$teaser->teaser_page_link && !$teaser->teaser_fragment_identifier) {
                     continue;
                 }
-                $teaser->type   = LinkTeaserElement::TYPE;
+                $teaser->type = LinkTeaserElement::TYPE;
                 $teaser->source = LinkTeaserElement::SOURCE_ARTICLE;
                 $teaser->save();
                 $articleTeaserCount++;
@@ -118,7 +118,6 @@ class CePageteaserMigration implements MigrationInterface
     }
 
     /**
-     * @return AbstractSchemaManager
      * @throws \Doctrine\DBAL\Exception
      */
     protected function getSchemaManager(): AbstractSchemaManager
