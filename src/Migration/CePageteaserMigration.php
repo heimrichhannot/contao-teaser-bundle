@@ -13,9 +13,9 @@ use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
 
 class CePageteaserMigration implements MigrationInterface
 {
-    private ContaoFramework $contaoFramework;
+    private readonly ContaoFramework $contaoFramework;
 
-    private Connection $connection;
+    private readonly Connection $connection;
 
     public function __construct(ContaoFramework $contaoFramework, Connection $connection)
     {

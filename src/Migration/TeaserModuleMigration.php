@@ -11,7 +11,7 @@ use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
 
 class TeaserModuleMigration implements MigrationInterface
 {
-    private Connection $connection;
+    private readonly Connection $connection;
 
     public function __construct(Connection $connection)
     {

@@ -145,7 +145,7 @@ class LinkTeaserElement extends ContentText
         $this->addContainerClass($this->addImage ? 'has-image' : 'no-image');
     }
 
-    private function addLinkToTemplate(Template $template, ContentModel $model)
+    private function addLinkToTemplate(Template $template, ContentModel $model): void
     {
         if (ContentContainer::LINK_TEXT_CUSTOM === $model->teaserLinkText) {
 
@@ -336,14 +336,14 @@ class LinkTeaserElement extends ContentText
         $this->setHref(Environment::get('request'));
 
         // Remove an existing file parameter (see #5683)
-        if (preg_match('/(&(amp;)?|\?)file=/', $this->getHref())) {
+        if (preg_match('/(&(amp;)?|\?)file=/', (string) $this->getHref())) {
             $this->setHref(preg_replace('/(&(amp;)?|\?)file=[^&]+/', '', $this->getHref()));
         }
 
         $this->setHref(sprintf(
             '%s%sfile=%s',
             $this->getHref(),
-            ((Config::get('disableAlias') || str_contains($this->getHref(), '?')) ? '&amp;' : '?'),
+            ((Config::get('disableAlias') || str_contains((string) $this->getHref(), '?')) ? '&amp;' : '?'),
             System::urlEncode($objFile->path)
         ));
         $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['downloadTitle'], $arrMeta['title']));
@@ -445,7 +445,7 @@ class LinkTeaserElement extends ContentText
     protected function getLinkTitle($strHref)
     {
         // Replace inserttag links with title
-        if (!str_contains($strHref, '{{') || !str_contains($strHref, '}}')) {
+        if (!str_contains((string) $strHref, '{{') || !str_contains((string) $strHref, '}}')) {
             return $strHref;
         }
 
