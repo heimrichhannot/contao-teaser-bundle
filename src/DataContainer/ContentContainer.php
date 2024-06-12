@@ -88,6 +88,7 @@ class ContentContainer
         $dca['fields']['article']['label'] = &$GLOBALS['TL_LANG']['tl_content']['articleId'];
         $dca['fields']['article']['eval']['submitOnChange'] = false;
         $dca['fields']['linkTitle']['label'][1] = $GLOBALS['TL_LANG']['tl_content']['linkTitle']['huh_teaser'] ?? $dca['fields']['linkTitle']['label'][1];
+        $dca['fields']['titleText']['label'][1] = $GLOBALS['TL_LANG']['tl_content']['titleText']['huh_teaser'] ?? $dca['fields']['titleText']['label'][1];
         $dca['fields']['linkTitle']['eval']['tl_class'] = 'w50 clr';
         $dca['fields']['linkTitle']['eval']['mandatory'] = true;
 

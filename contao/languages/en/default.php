@@ -36,11 +36,3 @@ $GLOBALS['TL_LANG']['MSC']['linkteaser']['predefinedLinkText'] = 'Predefined';
  * Content elements
  */
 $GLOBALS['TL_LANG']['CTE']['linkteaser'] = array('Link-Teaser', 'Creates a linked teaser to a page, article, file or external URL.');
-
-/**
- * Meta wizard fields
- */
-
-$GLOBALS['TL_LANG']['MSC']['aw_teaser_linktext'] = 'Link text';
-$GLOBALS['TL_LANG']['MSC']['aw_teaser_ariaLabel'] = 'Aria label';
-$GLOBALS['TL_LANG']['MSC']['aw_teaser_title'] = 'Title attribute';

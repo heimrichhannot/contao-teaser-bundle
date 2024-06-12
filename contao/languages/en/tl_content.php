@@ -10,41 +10,48 @@
 
 use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
 
+$lang = &$GLOBALS['TL_LANG']['tl_content'];
+
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_content']['source'][0] = 'Redirect target';
-$GLOBALS['TL_LANG']['tl_content']['source'][1] = 'Here you can override the default redirect target.';
-$GLOBALS['TL_LANG']['tl_content']['jumpTo'][0] = 'Redirect page';
-$GLOBALS['TL_LANG']['tl_content']['jumpTo'][1] = 'Please choose the page to which visitors will be redirected when clicking the teaser item.';
-$GLOBALS['TL_LANG']['tl_content']['articleId'][0] = 'Article';
-$GLOBALS['TL_LANG']['tl_content']['articleId'][1] = 'Please choose the article to which visitors will be redirected when clicking the teaser item.';
-$GLOBALS['TL_LANG']['tl_content']['fileSRC'][0] = 'File source';
-$GLOBALS['TL_LANG']['tl_content']['fileSRC'][1] = 'Please choose the file source to which visitors will be redirected when clicking the teaser item.';
+$lang['source'][0] = 'Redirect target';
+$lang['source'][1] = 'Here you can override the default redirect target.';
+$lang['jumpTo'][0] = 'Redirect page';
+$lang['jumpTo'][1] = 'Please choose the page to which visitors will be redirected when clicking the teaser item.';
+$lang['articleId'][0] = 'Article';
+$lang['articleId'][1] = 'Please choose the article to which visitors will be redirected when clicking the teaser item.';
+$lang['fileSRC'][0] = 'File source';
+$lang['fileSRC'][1] = 'Please choose the file source to which visitors will be redirected when clicking the teaser item.';
 
-$GLOBALS['TL_LANG']['tl_content']['teaserLinkText'][0] = '"More" link text';
-$GLOBALS['TL_LANG']['tl_content']['teaserLinkText'][1] = 'Please choose a text for the "more" link.';
-$GLOBALS['TL_LANG']['tl_content']['teaserLinkCssClass'][0] = '"More" link CSS classes';
-$GLOBALS['TL_LANG']['tl_content']['teaserLinkCssClass'][1] = 'Here you can specify one or more CSS classes for the "more" link.';
-$GLOBALS['TL_LANG']['tl_content']['teaserLinkBehaviour'][0] = '"More" link behaviour';
-$GLOBALS['TL_LANG']['tl_content']['teaserLinkBehaviour'][1] = 'Control the behaviour of the "more" link and teaser element.';
-$GLOBALS['TL_LANG']['tl_content']['teaserContentTemplate'][0] = 'Overwrite teaser template';
-$GLOBALS['TL_LANG']['tl_content']['teaserContentTemplate'][1] = 'Overwrite the template for the content of the teaser.';
+$lang['teaserLinkText'][0] = '"More" link text';
+$lang['teaserLinkText'][1] = 'Please choose a text for the "more" link.';
+$lang['teaserLinkCssClass'][0] = '"More" link CSS classes';
+$lang['teaserLinkCssClass'][1] = 'Here you can specify one or more CSS classes for the "more" link.';
+$lang['teaserLinkBehaviour'][0] = '"More" link behaviour';
+$lang['teaserLinkBehaviour'][1] = 'Control the behaviour of the "more" link and teaser element.';
+$lang['teaserContentTemplate'][0] = 'Overwrite teaser template';
+$lang['teaserContentTemplate'][1] = 'Overwrite the template for the content of the teaser.';
+
+$lang['linkTitle']['huh_teaser'] = 'Enter a custom "more" link text here. You can use the placeholder %title% (the title of the linked element).';
+$lang['titleText']['huh_teaser'] = 'Enter a custom link title (title attribute) here. You can use the placeholders %title% (the title of the linked element) and %link% (the specified link text).';
+$lang['teaserAriaLabel'][0] = 'Aria label';
+$lang['teaserAriaLabel'][1] = 'Enter a custom aria label here. You can use the placeholders %title% (the title of the linked element) and %link% (the specified link text).';
 
 /**
  * Legends
  */
-$GLOBALS['TL_LANG']['tl_content']['teaser_legend']= 'Teaser settings';
+$lang['teaser_legend']= 'Teaser settings';
 
 /**
  * References
  */
-$GLOBALS['TL_LANG']['tl_content']['reference']['source'][LinkTeaserElement::SOURCE_PAGE] = 'Page';
-$GLOBALS['TL_LANG']['tl_content']['reference']['source']['file'] = 'File';
-$GLOBALS['TL_LANG']['tl_content']['reference']['source']['download'] = 'Download';
-$GLOBALS['TL_LANG']['tl_content']['reference']['source'][LinkTeaserElement::SOURCE_ARTICLE] = 'Article';
-$GLOBALS['TL_LANG']['tl_content']['reference']['source']['external'] = 'External URL';
+$lang['reference']['source'][LinkTeaserElement::SOURCE_PAGE] = 'Page';
+$lang['reference']['source']['file'] = 'File';
+$lang['reference']['source']['download'] = 'Download';
+$lang['reference']['source'][LinkTeaserElement::SOURCE_ARTICLE] = 'Article';
+$lang['reference']['source']['external'] = 'External URL';
 
-$GLOBALS['TL_LANG']['tl_content']['reference']['teaserLinkBehaviour']['default'] = 'Default - Display link';
-$GLOBALS['TL_LANG']['tl_content']['reference']['teaserLinkBehaviour']['linkAll'] = 'Link entire element and show link';
-$GLOBALS['TL_LANG']['tl_content']['reference']['teaserLinkBehaviour']['hideLink'] = 'Link entire element and hide link';
+$lang['reference']['teaserLinkBehaviour']['default'] = 'Default - Display link';
+$lang['reference']['teaserLinkBehaviour']['linkAll'] = 'Link entire element and show link';
+$lang['reference']['teaserLinkBehaviour']['hideLink'] = 'Link entire element and hide link';
