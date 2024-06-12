@@ -114,23 +114,6 @@ class ContentContainer
                 $dca['palettes'][LinkTeaserElement::TYPE]
             );
         }
-
-        $this->adjustLinkTextWizard($contentModel);
-    }
-
-    private function adjustLinkTextWizard(ContentModel $contentModel): void
-    {
-//        $tr = System::getContainer()->get('translator');
-//        $field = &$GLOBALS['TL_DCA']['tl_content']['fields']['teaserLinkTextNew'];
-//        $placeholder = match($contentModel->source) {
-//            LinkTeaserElement::SOURCE_PAGE => $GLOBALS['TL_LANG']['MSC']['linkteaser']['pageTitle'] ?? 'Visit page: %s',
-//            LinkTeaserElement::SOURCE_FILE => $GLOBALS['TL_LANG']['MSC']['linkteaser']['fileTitle'] ?? 'Show file: %s',
-//            LinkTeaserElement::SOURCE_DOWNLOAD => $GLOBALS['TL_LANG']['MSC']['linkteaser']['downloadTitle'] ?? 'Download file: %s',
-//            LinkTeaserElement::SOURCE_ARTICLE => $GLOBALS['TL_LANG']['MSC']['linkteaser']['articleTitle'] ?? 'Read article: %s',
-//            LinkTeaserElement::SOURCE_EXTERNAL => $GLOBALS['TL_LANG']['MSC']['linkteaser']['externalLinkTitle'] ?? 'Visit page: %s',
-//        };
-//        $field['eval']['metaFields']['ariaLabel'] = $field['eval']['metaFields']['ariaLabel'].' placeholder="%linkTitle%: '.$placeholder.'"';
-//        $field['eval']['metaFields']['title'] = $field['eval']['metaFields']['title'].' placeholder="'.$placeholder.'"';
     }
 
     /**
