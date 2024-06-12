@@ -14,6 +14,7 @@ namespace HeimrichHannot\ContaoTeaserBundle\ContentElement;
 use Contao\ArticleModel;
 use Contao\BackendTemplate;
 use Contao\Config;
+use Contao\ContentModel;
 use Contao\ContentText;
 use Contao\Controller;
 use Contao\Environment;
@@ -23,6 +24,7 @@ use Contao\Input;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
+use Contao\Template;
 use HeimrichHannot\ContaoTeaserBundle\DataContainer\ContentContainer;
 use HeimrichHannot\UtilsBundle\Util\Utils;
 
@@ -31,13 +33,13 @@ class LinkTeaserElement extends ContentText
     public const TYPE = 'linkteaser';
 
     public const SOURCE_PAGE = 'page';
-
+    public const SOURCE_FILE = 'file';
+    public const SOURCE_DOWNLOAD = 'download';
     public const SOURCE_ARTICLE = 'article';
+    public const SOURCE_EXTERNAL = 'external';
 
     public const LINK_BEHAVIOUR_SHOW_LINK = 'default';
-
     public const LINK_BEHAVIOUR_LINK_ALL = 'linkAll';
-
     public const LINK_BEHAVIOUR_HIDE_LINK = 'hideLink';
 
     /**
@@ -67,6 +69,9 @@ class LinkTeaserElement extends ContentText
 
     public const LINK_CSS_CLASS = 'more';
 
+    /** Titel der Entität für den Link */
+    private string $targetTitle = '';
+
     protected function compile()
     {
         parent::compile();
@@ -81,9 +86,7 @@ class LinkTeaserElement extends ContentText
     {
         global $objPage;
 
-        if (ContentContainer::LINK_TEXT_CUSTOM === $this->teaserLinkText) {
-            $this->label = $this->linkTitle;
-        } else {
+        if (ContentContainer::LINK_TEXT_CUSTOM !== $this->teaserLinkText) {
             $this->label = ($GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext'][$this->teaserLinkText] ?? '');
         }
         $this->setLink(is_array($this->label) ? $this->label[0] : $this->label);
@@ -134,13 +137,45 @@ class LinkTeaserElement extends ContentText
             $this->addLinkAttribute('rel', 'noopener');
         }
 
-        $this->Template->linkTitle = $this->getTitle();
-        $this->Template->link = $this->getLink();
-        $this->Template->linkAttributes = !empty($this->getLinkAttributes()) ? ' ' . $this->getLinkAttributes(true) : '';
+        $this->addLinkToTemplate($this->Template, $this->getModel());
+
         $this->Template->linkTemplate = $this->getLinkTemplate();
         $this->Template->content = $this->generateContent();
 
         $this->addContainerClass($this->addImage ? 'has-image' : 'no-image');
+    }
+
+    private function addLinkToTemplate(Template $template, ContentModel $model)
+    {
+        if (ContentContainer::LINK_TEXT_CUSTOM === $model->teaserLinkText) {
+
+            $template->link = str_replace('%title%', $this->targetTitle, $model->linkTitle);
+
+            if ($model->teaserAriaLabel) {
+                $template->ariaLabel = str_replace(
+                    ['%title%', '%link%'],
+                    [$this->targetTitle, $template->link],
+                    $model->teaserAriaLabel
+                );
+            } else {
+                $template->ariaLabel = $this->getTitle();
+            }
+            if ($model->titleText) {
+                $template->linkTitle = str_replace(
+                    ['%title%', '%link%'],
+                    [$this->targetTitle, $template->link],
+                    $model->titleText
+                );
+            } else {
+                $template->linkTitle = $this->getTitle();
+            }
+        } else {
+            $this->Template->link = $this->getLink();
+            $this->Template->ariaLabel = $this->getTitle();
+            $this->Template->linkTitle = $this->getTitle();
+        }
+
+        $this->Template->linkAttributes = !empty($this->getLinkAttributes()) ? ' ' . $this->getLinkAttributes(true) : '';
     }
 
     /**
@@ -228,6 +263,7 @@ class LinkTeaserElement extends ContentText
 
         $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['pageTitle'], $objTarget->pageTitle ?: $objTarget->title));
         $this->setLink(sprintf($this->getLink(), $objTarget->title));
+        $this->targetTitle = $objTarget->pageTitle ?: $objTarget->title;
 
         $utils = System::getContainer()->get(Utils::class);
 
@@ -262,6 +298,7 @@ class LinkTeaserElement extends ContentText
         $this->setHref($objFile->path);
         $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['fileTitle'], $arrMeta['title']));
         $this->setLink(sprintf($this->getLink(), $arrMeta['title']));
+        $this->targetTitle = $arrMeta['title'];
 
         return true;
     }
@@ -311,6 +348,7 @@ class LinkTeaserElement extends ContentText
         ));
         $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['downloadTitle'], $arrMeta['title']));
         $this->setLink(sprintf($this->getLink(), $arrMeta['title']));
+        $this->targetTitle = $arrMeta['title'];
 
         return true;
     }
@@ -345,6 +383,7 @@ class LinkTeaserElement extends ContentText
         $this->setHref(StringUtil::ampersand($rootPage->getFrontendUrl($strParams)));
         $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['articleTitle'], $objArticle->title));
         $this->setLink(sprintf($this->getLink(), $objArticle->title));
+        $this->targetTitle = $objArticle->title;
 
         return true;
     }
@@ -364,12 +403,14 @@ class LinkTeaserElement extends ContentText
             $this->setHref(StringUtil::encodeEmail($this->url));
             $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['externalMailTitle'], $this->getHref()));
             $this->setLink(sprintf($this->getLink(), $this->getHref()));
+            $this->targetTitle = $this->getHref();
         }
         else {
             $this->setHref(StringUtil::ampersand($this->url));
             $strLinkTitle = $this->getLinkTitle($this->getHref());
             $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['externalLinkTitle'], $strLinkTitle));
             $this->setLink(sprintf($this->getLink(), $strLinkTitle));
+            $this->targetTitle = $strLinkTitle;
         }
 
         return true;
@@ -380,20 +421,16 @@ class LinkTeaserElement extends ContentText
      *
      * @return array The meta information with i18n support
      */
-    protected function getMetaFromFile(File $objFile)
+    protected function getMetaFromFile(File $objFile): array
     {
         global $objPage;
 
         $objModel = $objFile->getModel();
 
-        $arrMeta = $this->getMetaData($objModel->meta, $objPage->language);
-
-        if (empty($arrMeta) && $objPage->rootFallbackLanguage !== null) {
-            $arrMeta = $this->getMetaData($objModel->meta, $objPage->rootFallbackLanguage);
-        }
+        $this->getCurrentMetaData($objModel->meta ?? '', $objPage);
 
         // Use the file name as title if none is given
-        if ($arrMeta['title'] == '') {
+        if (empty($arrMeta['title'])) {
             $arrMeta['title'] = StringUtil::specialchars($objFile->basename);
         }
 
@@ -544,5 +581,26 @@ class LinkTeaserElement extends ContentText
     public function removeLinkAttribute($key): void
     {
         unset($this->arrLinkAttributes);
+    }
+
+    /**
+     * @param $objFile
+     * @param $objModel
+     * @param $objPage
+     * @return void
+     */
+    private function getCurrentMetaData(string $meta, PageModel $pageModel = null): array
+    {
+        if (System::getContainer()->get(Utils::class)->container()->isBackend()) {
+            $arrMeta = $this->getMetaData($meta, $GLOBALS['TL_LANGUAGE']);
+        } else {
+            $arrMeta = $this->getMetaData($meta, $pageModel?->language);
+
+            if (empty($arrMeta) && $pageModel->rootFallbackLanguage !== null) {
+                $arrMeta = $this->getMetaData($meta, $pageModel->rootFallbackLanguage);
+            }
+        }
+
+        return $arrMeta;
     }
 }

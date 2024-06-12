@@ -40,7 +40,6 @@ $dc['subpalettes']['source_external'] = 'url';
  */
 $arrFields = [
     'source'                => [
-        'label'            => &$GLOBALS['TL_LANG']['tl_content']['source'],
         'default'          => LinkTeaserElement::SOURCE_PAGE,
         'exclude'          => true,
         'filter'           => true,
@@ -77,11 +76,17 @@ $arrFields = [
         ],
         'sql'              => "varchar(64) NOT NULL default ''",
     ],
+    'teaserAriaLabel' => [
+        'exclude' => true,
+        'inputType' => 'text',
+        'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
+        'sql' => "varchar(255) NOT NULL default ''"
+    ],
     'teaserLinkCssClass'    => [
         'label'     => &$GLOBALS['TL_LANG']['tl_content']['teaserLinkCssClass'],
         'exclude'   => true,
         'inputType' => 'text',
-        'eval'      => ['tl_class' => 'w50', 'maxlength' => 64],
+        'eval'      => ['tl_class' => 'w50 clr', 'maxlength' => 64],
         'sql'       => "varchar(64) NOT NULL default ''",
     ],
     'teaserLinkBehaviour'   => [

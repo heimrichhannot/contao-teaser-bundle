@@ -25,14 +25,11 @@ class ContentContainer
 {
     public const LINK_TEXT_CUSTOM = 'custom';
 
-    private Security $security;
-
-    private RequestStack $requestStack;
-
-    public function __construct(Security $security, RequestStack $requestStack)
+    public function __construct(
+        private readonly Security $security,
+        private readonly RequestStack $requestStack
+    )
     {
-        $this->security = $security;
-        $this->requestStack = $requestStack;
     }
 
     /**
@@ -90,11 +87,15 @@ class ContentContainer
         $dca['fields']['target']['load_callback'][] = [self::class, 'setTargetFlags'];
         $dca['fields']['article']['label'] = &$GLOBALS['TL_LANG']['tl_content']['articleId'];
         $dca['fields']['article']['eval']['submitOnChange'] = false;
-        $dca['fields']['linkTitle']['label'][1] = $GLOBALS['TL_LANG']['tl_content']['linkTitle']['huh_teaser'];
+        $dca['fields']['linkTitle']['label'][1] = $GLOBALS['TL_LANG']['tl_content']['linkTitle']['huh_teaser'] ?? $dca['fields']['linkTitle']['label'][1];
+        $dca['fields']['linkTitle']['eval']['tl_class'] = 'w50 clr';
+        $dca['fields']['linkTitle']['eval']['mandatory'] = true;
 
         if (static::LINK_TEXT_CUSTOM === $contentModel->teaserLinkText) {
             PaletteManipulator::create()
-                ->addField('linkTitle', 'teaserLinkText', PaletteManipulator::POSITION_AFTER)
+                ->addField('linkTitle', 'teaserLinkText')
+                ->addField('teaserAriaLabel', 'linkTitle')
+                ->addField('titleText', 'teaserAriaLabel')
                 ->applyToPalette(LinkTeaserElement::TYPE, ContentModel::getTable());
         }
 
@@ -112,6 +113,23 @@ class ContentContainer
                 $dca['palettes'][LinkTeaserElement::TYPE]
             );
         }
+
+        $this->adjustLinkTextWizard($contentModel);
+    }
+
+    private function adjustLinkTextWizard(ContentModel $contentModel): void
+    {
+//        $tr = System::getContainer()->get('translator');
+//        $field = &$GLOBALS['TL_DCA']['tl_content']['fields']['teaserLinkTextNew'];
+//        $placeholder = match($contentModel->source) {
+//            LinkTeaserElement::SOURCE_PAGE => $GLOBALS['TL_LANG']['MSC']['linkteaser']['pageTitle'] ?? 'Visit page: %s',
+//            LinkTeaserElement::SOURCE_FILE => $GLOBALS['TL_LANG']['MSC']['linkteaser']['fileTitle'] ?? 'Show file: %s',
+//            LinkTeaserElement::SOURCE_DOWNLOAD => $GLOBALS['TL_LANG']['MSC']['linkteaser']['downloadTitle'] ?? 'Download file: %s',
+//            LinkTeaserElement::SOURCE_ARTICLE => $GLOBALS['TL_LANG']['MSC']['linkteaser']['articleTitle'] ?? 'Read article: %s',
+//            LinkTeaserElement::SOURCE_EXTERNAL => $GLOBALS['TL_LANG']['MSC']['linkteaser']['externalLinkTitle'] ?? 'Visit page: %s',
+//        };
+//        $field['eval']['metaFields']['ariaLabel'] = $field['eval']['metaFields']['ariaLabel'].' placeholder="%linkTitle%: '.$placeholder.'"';
+//        $field['eval']['metaFields']['title'] = $field['eval']['metaFields']['title'].' placeholder="'.$placeholder.'"';
     }
 
     /**
@@ -167,10 +185,10 @@ class ContentContainer
         if ($user->isAdmin) {
             $arrOptions = [
                 LinkTeaserElement::SOURCE_PAGE,
-                'file',
-                'download',
+                LinkTeaserElement::SOURCE_FILE,
+                LinkTeaserElement::SOURCE_DOWNLOAD,
                 LinkTeaserElement::SOURCE_ARTICLE,
-                'external',
+                LinkTeaserElement::SOURCE_EXTERNAL,
             ];
 
             // HOOK: extend options by callback functions

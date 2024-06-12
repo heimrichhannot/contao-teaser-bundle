@@ -24,6 +24,9 @@ $GLOBALS['TL_LANG']['tl_content']['fileSRC'][1] = 'Bitte wählen Sie eine Datei 
 
 $GLOBALS['TL_LANG']['tl_content']['teaserLinkText'][0] = 'Weiterlesen-Link Text';
 $GLOBALS['TL_LANG']['tl_content']['teaserLinkText'][1] = 'Wählen Sie den Link-Text aus.';
+
+$GLOBALS['TL_LANG']['tl_content']['teaserCustomLinkText'][0] = 'Benutzerdefinierter Weiterlesen-Link Text';
+$GLOBALS['TL_LANG']['tl_content']['teaserCustomLinkText'][1] = 'Geben Sie hier einen benutzerdefinierten Weiterlesen-Link Text an. Sie können darüber hinaus Aria-Label und Tile-Attribute überschreiben';
 $GLOBALS['TL_LANG']['tl_content']['teaserLinkCssClass'][0] = 'Weiterlesen-Link CSS-Klasse';
 $GLOBALS['TL_LANG']['tl_content']['teaserLinkCssClass'][1] = 'Hier können Sie eine oder mehrer CSS-Klassen für den Link angeben.';
 $GLOBALS['TL_LANG']['tl_content']['teaserLinkBehaviour'][0] = 'Weiterlesen-Link-Verhalten';
