@@ -33,13 +33,19 @@ class LinkTeaserElement extends ContentText
     public const TYPE = 'linkteaser';
 
     public const SOURCE_PAGE = 'page';
+
     public const SOURCE_FILE = 'file';
+
     public const SOURCE_DOWNLOAD = 'download';
+
     public const SOURCE_ARTICLE = 'article';
+
     public const SOURCE_EXTERNAL = 'external';
 
     public const LINK_BEHAVIOUR_SHOW_LINK = 'default';
+
     public const LINK_BEHAVIOUR_LINK_ALL = 'linkAll';
+
     public const LINK_BEHAVIOUR_HIDE_LINK = 'hideLink';
 
     /**
@@ -69,7 +75,9 @@ class LinkTeaserElement extends ContentText
 
     public const LINK_CSS_CLASS = 'more';
 
-    /** Titel der Entität für den Link */
+    /**
+     * Titel der Entität für den Link
+     */
     private string $targetTitle = '';
 
     protected function compile()
@@ -583,12 +591,6 @@ class LinkTeaserElement extends ContentText
         unset($this->arrLinkAttributes);
     }
 
-    /**
-     * @param $objFile
-     * @param $objModel
-     * @param $objPage
-     * @return void
-     */
     private function getCurrentMetaData(string $meta, PageModel $pageModel = null): array
     {
         if (System::getContainer()->get(Utils::class)->container()->isBackend()) {

@@ -28,8 +28,7 @@ class ContentContainer
     public function __construct(
         private readonly Security $security,
         private readonly RequestStack $requestStack
-    )
-    {
+    ) {
     }
 
     /**
