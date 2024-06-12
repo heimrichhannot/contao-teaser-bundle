@@ -21,7 +21,7 @@ Can be used as replacement for ce_page_teaser.
 	
 Prerequisites:
 * Contao ^4.9 Managed edition
-* PHP ^7.4
+* PHP ^8.1
 
 Install with composer:
 
