@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.2.0] - 2024-06-12
+- Added: field for aria label and title for custom link text ([#20](https://github.com/heimrichhannot/contao-teaser-bundle/pull/20))
+
 ## [2.1.0] - 2024-06-11
 - Added: contao 5 support
 - Changed: minimum php version is now 8.0
