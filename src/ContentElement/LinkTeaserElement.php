@@ -318,8 +318,13 @@ class LinkTeaserElement extends ContentText
      */
     protected function handleDownload()
     {
+        /** @var Utils $utils */
         $utils = System::getContainer()->get(Utils::class);
-        $objFile = new File($utils->file()->getPathFromUuid($this->fileSRC));
+        try {
+            $objFile = new File($utils->file()->getPathFromUuid($this->fileSRC));
+        } catch (\Exception $e) {
+            $objFile = null;
+        }
 
         if ($objFile === null) {
             return false;
