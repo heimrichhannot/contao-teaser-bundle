@@ -88,7 +88,7 @@ class CePageteaserMigration implements MigrationInterface
             foreach ($pageTeaser as $teaser) {
                 $teaser->type = LinkTeaserElement::TYPE;
                 $teaser->source = LinkTeaserElement::SOURCE_PAGE;
-                $teaser->jumpTo = $teaser->page_teaser_page;
+                $teaser->jumpTo = (int) $teaser->page_teaser_page;
                 if (!$teaser->showMore) {
                     $teaser->teaserLinkBehaviour = LinkTeaserElement::LINK_BEHAVIOUR_HIDE_LINK;
                 } else {

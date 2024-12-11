@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.2.2] - 2024-12-11
+- Fixed: variable type
+
 ## [2.2.1] - 2024-11-04
 - Fixed: exception when download not exist or is invalid
 
