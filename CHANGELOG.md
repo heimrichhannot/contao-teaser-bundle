@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.3.0] - 2025-03-05
+- Changed: minimum contao version is now 4.13 ([#24](https://github.com/heimrichhannot/contao-teaser-bundle/pull/24))
+- Fixed: compatibility issue with symfony 7 ([#24](https://github.com/heimrichhannot/contao-teaser-bundle/pull/24))
+- Fixed: exception with external urls
+
 ## [2.2.2] - 2024-12-11
 - Fixed: variable type
 
