@@ -2,12 +2,12 @@
 
 namespace HeimrichHannot\ContaoTeaserBundle\Migration;
 
-use Doctrine\DBAL\Exception;
 use Contao\ContentModel;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Migration\MigrationInterface;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Exception\InvalidFieldNameException;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
