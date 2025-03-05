@@ -24,7 +24,6 @@
   "require": {
     "php": "^8.1",
     "contao/core-bundle": "~4.9 || ^5.0",
-    "contao/manager-plugin": "^2.0",
     "doctrine/dbal": "^2.13 || ^3.0",
     "heimrichhannot/contao-utils-bundle": "^2.28 || ^3.0",
     "symfony/dependency-injection": "^4.4 || ^5.0 || ^6.0"
@@ -39,5 +38,13 @@
   },
   "extra": {
     "contao-manager-plugin": "HeimrichHannot\\ContaoTeaserBundle\\ContaoManager\\Plugin"
+  },
+  "require-dev": {
+    "rector/rector": "^2.0",
+    "contao/contao-rector": "dev-main",
+    "symplify/easy-coding-standard": "^12.5",
+    "phpstan/phpstan": "^2.1",
+    "phpstan/phpstan-symfony": "^2.0",
+    "contao/manager-plugin": "^2.13"
   }
 }

@@ -1,3 +1,5 @@
 .idea
 /build
 *.orig
+vendor
+composer.lock
