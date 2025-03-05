@@ -2,6 +2,7 @@
 
 namespace HeimrichHannot\ContaoTeaserBundle\Migration;
 
+use Doctrine\DBAL\Exception;
 use Contao\ContentModel;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Migration\MigrationInterface;
@@ -118,7 +119,7 @@ class CePageteaserMigration implements MigrationInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     protected function getSchemaManager(): AbstractSchemaManager
     {
