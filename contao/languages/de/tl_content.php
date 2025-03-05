@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Contao Open Source CMS
+ * Contao Open Source CMS.
  *
  * Copyright (c) 2016 Heimrich & Hannot GmbH
  *
@@ -12,7 +13,7 @@ use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
 
 $lang = &$GLOBALS['TL_LANG']['tl_content'];
 
-/**
+/*
  * Fields
  */
 $lang['source'][0] = 'Weiterleitungsziel';
@@ -41,12 +42,12 @@ $lang['titleText']['huh_teaser'] = 'Geben Sie hier einen benutzerdefinierten Lin
 $lang['teaserAriaLabel'][0] = 'Aria-Label';
 $lang['teaserAriaLabel'][1] = 'Geben Sie hier ein benutzerdefiniertes Aria-Label an. Sie können die Platzhalter %title% (der Titel des verlinkten Elementes) und %link% (der angegebene Link-Text) verwenden.';
 
-/**
+/*
  * Legends
  */
-$lang['teaser_legend']= 'Teaser-Einstellungen';
+$lang['teaser_legend'] = 'Teaser-Einstellungen';
 
-/**
+/*
  * References
  */
 $lang['reference']['source'][LinkTeaserElement::SOURCE_PAGE] = 'Seite';

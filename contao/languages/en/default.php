@@ -1,15 +1,15 @@
 <?php
+
 /**
- * Contao Open Source CMS
+ * Contao Open Source CMS.
  *
  * Copyright (c) 2016 Heimrich & Hannot GmbH
  *
- * @package teaser
  * @author  Rico Kaltofen <r.kaltofen@heimrich-hannot.de>
  * @license http://www.gnu.org/licences/lgpl-3.0.html LGPL
  */
 
-/**
+/*
  * Teaser links
  */
 $GLOBALS['TL_LANG']['MSC']['linkteaser']['teaserlinktext']['default'][0] = 'more';
@@ -31,8 +31,7 @@ $GLOBALS['TL_LANG']['MSC']['linkteaser']['externalLinkTitle'] = 'Visit page: %s'
 $GLOBALS['TL_LANG']['MSC']['linkteaser']['customLinkText'] = 'Custom';
 $GLOBALS['TL_LANG']['MSC']['linkteaser']['predefinedLinkText'] = 'Predefined';
 
-
-/**
+/*
  * Content elements
  */
-$GLOBALS['TL_LANG']['CTE']['linkteaser'] = array('Link-Teaser', 'Creates a linked teaser to a page, article, file or external URL.');
+$GLOBALS['TL_LANG']['CTE']['linkteaser'] = ['Link-Teaser', 'Creates a linked teaser to a page, article, file or external URL.'];

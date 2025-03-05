@@ -44,7 +44,7 @@ class TeaserModuleMigration implements MigrationInterface
         }
 
         foreach ($elements as $element) {
-            if ((int) $element->article === 0) {
+            if (0 === (int) $element->article) {
                 return true;
             }
         }
@@ -60,17 +60,16 @@ class TeaserModuleMigration implements MigrationInterface
         );
 
         if (!$elements) {
-            return new MigrationResult(false, "Found no teaser elements to migrate.");
+            return new MigrationResult(false, 'Found no teaser elements to migrate.');
         }
 
         $elementCount = 0;
         foreach ($elements as $element) {
-            if ((int) $element->article === 0) {
+            if (0 === (int) $element->article) {
                 $element->article = $element->articleId;
                 $element->articleId = 0;
                 $element->save();
-                $elementCount++;
-
+                ++$elementCount;
             }
         }
 

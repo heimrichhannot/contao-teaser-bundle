@@ -1,10 +1,10 @@
 <?php
+
 /**
- * Contao Open Source CMS
+ * Contao Open Source CMS.
  *
  * Copyright (c) 2016 Heimrich & Hannot GmbH
  *
- * @package ${CARET}
  * @author  Rico Kaltofen <r.kaltofen@heimrich-hannot.de>
  * @license http://www.gnu.org/licences/lgpl-3.0.html LGPL
  */
@@ -49,7 +49,7 @@ class LinkTeaserElement extends ContentText
     public const LINK_BEHAVIOUR_HIDE_LINK = 'hideLink';
 
     /**
-     * Template
+     * Template.
      *
      * @var string
      */
@@ -76,7 +76,7 @@ class LinkTeaserElement extends ContentText
     public const LINK_CSS_CLASS = 'more';
 
     /**
-     * Titel der Entität für den Link
+     * Titel der Entität für den Link.
      */
     private string $targetTitle = '';
 
@@ -88,7 +88,7 @@ class LinkTeaserElement extends ContentText
     }
 
     /**
-     * Generate the teaser Link
+     * Generate the teaser Link.
      */
     protected function generateLink()
     {
@@ -120,6 +120,7 @@ class LinkTeaserElement extends ContentText
             if (System::getContainer()->get(Utils::class)->container()->isDev()) {
                 $this->content = '<!-- Teaser Bundle: Source was not found or hook returned false (showMore = false) -->';
             }
+
             return;
         }
 
@@ -141,7 +142,7 @@ class LinkTeaserElement extends ContentText
         $this->Template->linkClass = static::LINK_CSS_CLASS . ($this->teaserLinkCssClass ? ' ' . $this->teaserLinkCssClass : '');
 
         if ($objPage && $this->target) {
-            $this->Template->target = (($objPage->outputFormat == 'xhtml') ? ' onclick="return !window.open(this.href)"' : ' target="_blank"');
+            $this->Template->target = (('xhtml' == $objPage->outputFormat) ? ' onclick="return !window.open(this.href)"' : ' target="_blank"');
             $this->addLinkAttribute('rel', 'noopener');
         }
 
@@ -156,7 +157,6 @@ class LinkTeaserElement extends ContentText
     private function addLinkToTemplate(Template $template, ContentModel $model): void
     {
         if (ContentContainer::LINK_TEXT_CUSTOM === $model->teaserLinkText) {
-
             $template->link = str_replace('%title%', $this->targetTitle, $model->linkTitle);
 
             if ($model->teaserAriaLabel) {
@@ -187,7 +187,7 @@ class LinkTeaserElement extends ContentText
     }
 
     /**
-     * Generate the teaser content
+     * Generate the teaser content.
      *
      * @return string The parsed teaser content
      */
@@ -199,6 +199,7 @@ class LinkTeaserElement extends ContentText
             $template->title = $this->headline;
             $wildcard = $this->Template->linkTitle;
             $template->wildcard = $wildcard;
+
             return $template->parse();
         }
         switch ($this->floating) {
@@ -220,7 +221,7 @@ class LinkTeaserElement extends ContentText
         }
 
         // overwrite content template
-        if ($this->teaserContentTemplate != '') {
+        if ('' != $this->teaserContentTemplate) {
             $strTemplate = $this->teaserContentTemplate;
         }
 
@@ -231,10 +232,9 @@ class LinkTeaserElement extends ContentText
             ? false
             : $objT->background;
 
-        if($this->isActive()) {
+        if ($this->isActive()) {
             $this->addContainerClass('active');
-        }
-        else if($this->isTrail()) {
+        } elseif ($this->isTrail()) {
             $this->addContainerClass('trail');
         }
 
@@ -242,7 +242,7 @@ class LinkTeaserElement extends ContentText
     }
 
     /**
-     * Handle page links
+     * Handle page links.
      *
      * @return bool return true, or false if the page does not exist
      */
@@ -252,20 +252,20 @@ class LinkTeaserElement extends ContentText
 
         $objTarget = PageModel::findPublishedById($this->jumpTo);
 
-        if ($objTarget === null) {
+        if (null === $objTarget) {
             return false;
         }
 
         $objTarget = $objTarget->loadDetails();
 
-        if ($objTarget->target || ($objTarget->domain != '' && $objTarget->domain != Environment::get('host'))) {
+        if ($objTarget->target || ('' != $objTarget->domain && $objTarget->domain != Environment::get('host'))) {
             $this->target = true;
         }
 
         $this->setHref($objTarget->getAbsoluteUrl());
 
         // remove alias from root pages
-        if ($objTarget->type == 'root') {
+        if ('root' == $objTarget->type) {
             $this->setHref(str_replace($objTarget->alias, '', $this->getHref()));
         }
 
@@ -275,11 +275,10 @@ class LinkTeaserElement extends ContentText
 
         $utils = System::getContainer()->get(Utils::class);
 
-        if($utils->container()->isFrontend() && $objPage !== null) {
+        if ($utils->container()->isFrontend() && null !== $objPage) {
             if ($objPage->id == $objTarget->id) {
                 $this->setActive(true);
-            }
-            else if(is_array($objPage->trail) && in_array($objTarget->id, $objPage->trail)) {
+            } elseif (is_array($objPage->trail) && in_array($objTarget->id, $objPage->trail)) {
                 $this->setTrail(true);
             }
         }
@@ -288,7 +287,7 @@ class LinkTeaserElement extends ContentText
     }
 
     /**
-     * Handle files
+     * Handle files.
      *
      * @return bool return true, or false if the file does not exist
      */
@@ -297,7 +296,7 @@ class LinkTeaserElement extends ContentText
         $utils = System::getContainer()->get(Utils::class);
         $objFile = new File($utils->file()->getPathFromUuid($this->fileSRC));
 
-        if ($objFile === null) {
+        if (null === $objFile) {
             return false;
         }
 
@@ -312,7 +311,7 @@ class LinkTeaserElement extends ContentText
     }
 
     /**
-     * Handle downloads
+     * Handle downloads.
      *
      * @return bool return true, or false if the file does not exist
      */
@@ -326,7 +325,7 @@ class LinkTeaserElement extends ContentText
             $objFile = null;
         }
 
-        if ($objFile === null) {
+        if (null === $objFile) {
             return false;
         }
 
@@ -342,7 +341,7 @@ class LinkTeaserElement extends ContentText
         $file = Input::get('file', true);
 
         // Send the file to the browser and do not send a 404 header (see #4632)
-        if ($file != '' && $file == $objFile->path) {
+        if ('' != $file && $file == $objFile->path) {
             Controller::sendFileToBrowser($file);
         }
 
@@ -356,7 +355,7 @@ class LinkTeaserElement extends ContentText
         $this->setHref(sprintf(
             '%s%sfile=%s',
             $this->getHref(),
-            ((Config::get('disableAlias') || str_contains((string) $this->getHref(), '?')) ? '&amp;' : '?'),
+            (Config::get('disableAlias') || str_contains((string) $this->getHref(), '?')) ? '&amp;' : '?',
             System::urlEncode($objFile->path)
         ));
         $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['downloadTitle'], $arrMeta['title']));
@@ -367,7 +366,7 @@ class LinkTeaserElement extends ContentText
     }
 
     /**
-     * Handle articles
+     * Handle articles.
      *
      * @return bool return true, or false if the articles does not exist
      */
@@ -385,11 +384,11 @@ class LinkTeaserElement extends ContentText
 
         $objTarget = $objTarget->loadDetails();
 
-        if ($objTarget->domain != '' && $objTarget->domain != Environment::get('host')) {
+        if ('' != $objTarget->domain && $objTarget->domain != Environment::get('host')) {
             $this->target = true;
         }
 
-        $strParams = '/articles/' . ((!Config::get('disableAlias') && $objArticle->alias != '') ? $objArticle->alias : $objArticle->id);
+        $strParams = '/articles/' . ((!Config::get('disableAlias') && '' != $objArticle->alias) ? $objArticle->alias : $objArticle->id);
 
         $rootPage = PageModel::findByPk($objTarget->rootId);
 
@@ -402,13 +401,13 @@ class LinkTeaserElement extends ContentText
     }
 
     /**
-     * Handle external urls
+     * Handle external urls.
      *
      * @return bool return true, or false if the url does not exist
      */
     protected function handleExternal()
     {
-        if ($this->url == '') {
+        if ('' == $this->url) {
             return false;
         }
 
@@ -417,8 +416,7 @@ class LinkTeaserElement extends ContentText
             $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['externalMailTitle'], $this->getHref()));
             $this->setLink(sprintf($this->getLink(), $this->getHref()));
             $this->targetTitle = $this->getHref();
-        }
-        else {
+        } else {
             $this->setHref(StringUtil::ampersand($this->url));
             $strLinkTitle = $this->getLinkTitle($this->getHref());
             $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['externalLinkTitle'], $strLinkTitle));
@@ -430,7 +428,7 @@ class LinkTeaserElement extends ContentText
     }
 
     /**
-     * Generate the meta information for a given file
+     * Generate the meta information for a given file.
      *
      * @return array The meta information with i18n support
      */
@@ -451,7 +449,7 @@ class LinkTeaserElement extends ContentText
     }
 
     /**
-     * Convert {{*_url::*}} inserttags to its entity title
+     * Convert {{*_url::*}} inserttags to its entity title.
      *
      * @return string The link title of the element (page, article, news, event, faq)
      */
@@ -464,7 +462,7 @@ class LinkTeaserElement extends ContentText
 
         $arrTag = StringUtil::trimsplit('::', str_replace(['{{', '}}'], '', $strHref));
 
-        if (empty($arrTag) || $arrTag[0] == '' || $arrTag[1] == '') {
+        if (empty($arrTag) || '' == $arrTag[0] || '' == $arrTag[1]) {
             return $strHref;
         }
 
@@ -529,9 +527,6 @@ class LinkTeaserElement extends ContentText
         return $this->linkTemplate;
     }
 
-    /**
-     * @return mixed
-     */
     public function isActive()
     {
         return $this->blnActive;
@@ -542,9 +537,6 @@ class LinkTeaserElement extends ContentText
         $this->blnActive = $blnActive;
     }
 
-    /**
-     * @return mixed
-     */
     public function isTrail()
     {
         return $this->blnTrail;
@@ -555,7 +547,7 @@ class LinkTeaserElement extends ContentText
         $this->blnTrail = $blnTrail;
     }
 
-    public function setLinkAttributes($arrData, $delimiter = " "): void
+    public function setLinkAttributes($arrData, $delimiter = ' '): void
     {
         // set from string
         if (!is_array($arrData)) {
@@ -598,14 +590,14 @@ class LinkTeaserElement extends ContentText
         unset($this->arrLinkAttributes);
     }
 
-    private function getCurrentMetaData(string $meta, PageModel $pageModel = null): array
+    private function getCurrentMetaData(string $meta, ?PageModel $pageModel = null): array
     {
         if (System::getContainer()->get(Utils::class)->container()->isBackend()) {
             $arrMeta = $this->getMetaData($meta, $GLOBALS['TL_LANGUAGE']);
         } else {
             $arrMeta = $this->getMetaData($meta, $pageModel?->language);
 
-            if (empty($arrMeta) && $pageModel->rootFallbackLanguage !== null) {
+            if (empty($arrMeta) && null !== $pageModel->rootFallbackLanguage) {
                 $arrMeta = $this->getMetaData($meta, $pageModel->rootFallbackLanguage);
             }
         }

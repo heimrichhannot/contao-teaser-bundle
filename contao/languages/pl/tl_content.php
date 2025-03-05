@@ -1,7 +1,8 @@
 <?php
+
 $lang = &$GLOBALS['TL_LANG']['tl_content'];
 
-/**
+/*
  * Fields
  */
 $GLOBALS['TL_LANG']['tl_content']['linkTitle']['huh_teaser'] = 'Wprowadź tutaj niestandardowy tekst linku "więcej". Możesz użyć symbolu zastępczego %title% (tytuł połączonego elementu).';

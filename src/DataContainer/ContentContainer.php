@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Contao Open Source CMS
+ * Contao Open Source CMS.
  *
  * Copyright (c) 2018 Heimrich & Hannot GmbH
  *
@@ -27,12 +28,13 @@ class ContentContainer
 
     public function __construct(
         private readonly Security $security,
-        private readonly RequestStack $requestStack
+        private readonly RequestStack $requestStack,
     ) {
     }
 
     /**
      * @Callback(table="tl_content", target="fields.teaserLinkText.options")
+     *
      * @noinspection PhpUnused
      */
     public function getTeaserLinkText(): array
@@ -69,14 +71,14 @@ class ContentContainer
     /**
      * @Callback(table="tl_content", target="config.onload")
      */
-    public function onLoadCallback(DataContainer $dc = null): void
+    public function onLoadCallback(?DataContainer $dc = null): void
     {
         if (!$dc || !$dc->id || 'edit' !== $this->requestStack->getCurrentRequest()->query->get('act')) {
             return;
         }
 
         $contentModel = ContentModel::findByPk($dc->id);
-        if (!$contentModel || $contentModel->type !== LinkTeaserElement::TYPE) {
+        if (!$contentModel || LinkTeaserElement::TYPE !== $contentModel->type) {
             return;
         }
 
@@ -116,9 +118,7 @@ class ContentContainer
     }
 
     /**
-     * Dynamically add flags to the "target" field
-     *
-     * @return mixed
+     * Dynamically add flags to the "target" field.
      */
     public function setTargetFlags(mixed $varValue, DataContainer $dc)
     {
@@ -134,13 +134,15 @@ class ContentContainer
     }
 
     /**
-     * Dynamically add flags to the "fileSRC" field
+     * Dynamically add flags to the "fileSRC" field.
      *
      * @Callback(table="tl_content", target="fields.fileSRC.load")
      *
      * @template T
-     * @param T $value
+     *
+     * @param T             $value
      * @param DataContainer $dc
+     *
      * @return T
      */
     public function setFileSrcFlags($value, $dc)
@@ -157,11 +159,11 @@ class ContentContainer
     }
 
     /**
-     * Add the source options depending on the allowed fields (see #5498)
+     * Add the source options depending on the allowed fields (see #5498).
      *
      * @Callback(table="tl_content", target="fields.source.options")
      */
-    public function onSourceOptionsCallback(DataContainer $dc = null): array
+    public function onSourceOptionsCallback(?DataContainer $dc = null): array
     {
         $user = $this->security->getUser();
 
@@ -215,7 +217,7 @@ class ContentContainer
         }
 
         // Add the option currently set
-        if ($dc->activeRecord && $dc->activeRecord->source != '') {
+        if ($dc->activeRecord && '' != $dc->activeRecord->source) {
             $arrOptions[] = $dc->activeRecord->source;
             $arrOptions = \array_unique($arrOptions);
         }
@@ -224,7 +226,7 @@ class ContentContainer
     }
 
     /**
-     * Return all teaser content templates as array
+     * Return all teaser content templates as array.
      *
      * @Callback(table="tl_content", target="fields.teaserContentTemplate.options")
      */

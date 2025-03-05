@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Contao Open Source CMS
+ * Contao Open Source CMS.
  *
  * Copyright (c) 2016 Heimrich & Hannot GmbH
  *
@@ -12,7 +13,7 @@ use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
 
 $lang = &$GLOBALS['TL_LANG']['tl_content'];
 
-/**
+/*
  * Fields
  */
 $lang['source'][0] = 'Redirect target';
@@ -38,12 +39,12 @@ $lang['titleText']['huh_teaser'] = 'Enter a custom link title (title attribute) 
 $lang['teaserAriaLabel'][0] = 'Aria label';
 $lang['teaserAriaLabel'][1] = 'Enter a custom aria label here. You can use the placeholders %title% (the title of the linked element) and %link% (the specified link text).';
 
-/**
+/*
  * Legends
  */
-$lang['teaser_legend']= 'Teaser settings';
+$lang['teaser_legend'] = 'Teaser settings';
 
-/**
+/*
  * References
  */
 $lang['reference']['source'][LinkTeaserElement::SOURCE_PAGE] = 'Page';

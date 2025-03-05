@@ -25,7 +25,7 @@ class CePageteaserMigration implements MigrationInterface
 
     public function getName(): string
     {
-        return "ce_page_teaser to Teaser Bundle Migration";
+        return 'ce_page_teaser to Teaser Bundle Migration';
     }
 
     public function shouldRun(): bool
@@ -75,7 +75,7 @@ class CePageteaserMigration implements MigrationInterface
     {
         $schemaManager = $this->getSchemaManager();
         if (!in_array(strtolower('teaserLinkBehaviour'), array_keys($schemaManager->listTableColumns(ContentModel::getTable())))) {
-            return new MigrationResult(false, "Ce Page Teaser Migration needs schema update before running.");
+            return new MigrationResult(false, 'Ce Page Teaser Migration needs schema update before running.');
         }
 
         $pageTeaser = ContentModel::findByType('page_teaser');
@@ -95,7 +95,7 @@ class CePageteaserMigration implements MigrationInterface
                     $teaser->teaserLinkBehaviour = LinkTeaserElement::LINK_BEHAVIOUR_SHOW_LINK;
                 }
                 $teaser->save();
-                $pageTeaserCount++;
+                ++$pageTeaserCount;
             }
         }
 
@@ -107,7 +107,7 @@ class CePageteaserMigration implements MigrationInterface
                 $teaser->type = LinkTeaserElement::TYPE;
                 $teaser->source = LinkTeaserElement::SOURCE_ARTICLE;
                 $teaser->save();
-                $articleTeaserCount++;
+                ++$articleTeaserCount;
             }
         }
 
@@ -128,6 +128,7 @@ class CePageteaserMigration implements MigrationInterface
             /** @noinspection PhpDeprecationInspection */
             $schemaManager = $this->connection->getSchemaManager();
         }
+
         return $schemaManager;
     }
 }
