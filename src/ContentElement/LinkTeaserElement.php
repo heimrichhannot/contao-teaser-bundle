@@ -480,6 +480,8 @@ class LinkTeaserElement extends ContentText
             case 'faq_url':
                 return sprintf('{{faq_title::%d}}', $arrTag[1]);
         }
+
+        return $strHref;
     }
 
     protected function addContainerClass($strClass)
