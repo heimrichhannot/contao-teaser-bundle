@@ -15,20 +15,21 @@ use Contao\Backend;
 use Contao\Config;
 use Contao\ContentModel;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
+use Contao\CoreBundle\Security\ContaoCorePermissions;
 use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\DataContainer;
 use Contao\System;
 use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ContentContainer
 {
     public const LINK_TEXT_CUSTOM = 'custom';
 
     public function __construct(
-        private readonly Security $security,
         private readonly RequestStack $requestStack,
+        private readonly AuthorizationCheckerInterface $auth,
     ) {
     }
 
@@ -165,9 +166,7 @@ class ContentContainer
      */
     public function onSourceOptionsCallback(?DataContainer $dc = null): array
     {
-        $user = $this->security->getUser();
-
-        if ($user->isAdmin) {
+        if ($this->auth->isGranted('ROLE_ADMIN')) {
             $arrOptions = [
                 LinkTeaserElement::SOURCE_PAGE,
                 LinkTeaserElement::SOURCE_FILE,
@@ -189,23 +188,23 @@ class ContentContainer
         $arrOptions = [];
 
         // Add the "file" and "download" option
-        if ($user->hasAccess('tl_content::fileSRC', 'alexf')) {
+        if ($this->auth->isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELD_OF_TABLE, 'tl_content::fileSR')) {
             $arrOptions[] = 'file';
             $arrOptions[] = 'download';
         }
 
         // Add the "page" option
-        if ($user->hasAccess('tl_content::jumpTo', 'alexf')) {
+        if ($this->auth->isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELD_OF_TABLE, 'tl_content::jumpTo')) {
             $arrOptions[] = 'page';
         }
 
         // Add the "article" option
-        if ($user->hasAccess('tl_content::article', 'alexf')) {
+        if ($this->auth->isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELD_OF_TABLE, 'tl_content::article')) {
             $arrOptions[] = 'article';
         }
 
         // Add the "external" option
-        if ($user->hasAccess('tl_content::url', 'alexf')) {
+        if ($this->auth->isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELD_OF_TABLE, 'tl_content::url')) {
             $arrOptions[] = 'external';
         }
 
