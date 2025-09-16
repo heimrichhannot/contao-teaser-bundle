@@ -293,12 +293,17 @@ class LinkTeaserElement extends ContentText
      */
     protected function handleFile()
     {
-        $utils = System::getContainer()->get(Utils::class);
-        $objFile = new File($utils->file()->getPathFromUuid($this->fileSRC));
-
-        if (null === $objFile) {
+        if (!$this->fileSRC) {
             return false;
         }
+
+        $utils = System::getContainer()->get(Utils::class);
+        $filePath = $utils->file()->getPathFromUuid($this->fileSRC);
+        if (null === $filePath) {
+            return false;
+        }
+
+        $objFile = new File($filePath);
 
         $arrMeta = $this->getMetaFromFile($objFile);
 
