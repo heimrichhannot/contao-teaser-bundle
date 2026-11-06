@@ -33,7 +33,7 @@ class CePageteaserMigration implements MigrationInterface
     {
         $schemaManager = $this->getSchemaManager();
 
-        if (!$schemaManager->tablesExist(ContentModel::getTable())) {
+        if (!$schemaManager->tablesExist([ContentModel::getTable()])) {
             return false;
         }
         if (!in_array(strtolower('teaserLinkBehaviour'), array_keys($schemaManager->listTableColumns(ContentModel::getTable())))) {

@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+- Changed: allow doctrine/dbal 4 (`tablesExist()` takes an array)
+
 ## [2.3.1] - 2025-09-16
 - Fixed: exception with empty images
 
