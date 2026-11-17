@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// Standalone unit regression test: php tests/handle_article.php
+// Run with composer test or php tests/handle_article.php (no dependencies required).
 // Contao's static model lookups and routing are replaced with in-memory fixtures.
 namespace Contao {
     class ContentText
@@ -99,13 +99,25 @@ namespace {
         }
     }
 
+    function newElement(): LinkTeaserElement
+    {
+        return new class extends LinkTeaserElement {
+            public function handleArticle()
+            {
+                return parent::handleArticle();
+            }
+        };
+    }
+
     $GLOBALS['TL_LANG']['MSC']['linkteaser']['articleTitle'] = 'Read %s';
     $cases = [
         ['article alias', 'selected-article', false, 'example.org', '/details', '/details/articles/selected-article.html', false],
         ['missing alias', '', false, 'example.org', '/details', '/details/articles/7.html', false],
         ['aliases disabled', 'selected-article', true, 'example.org', '/details', '/details/articles/7.html', false],
         ['different domain', 'selected-article', false, 'other.example', 'https://other.example/details', 'https://other.example/details/articles/selected-article.html', true],
-        ['escaped URL', 'selected-article', false, 'example.org', '/details?a=1&b=2', '/details?a=1&amp;b=2/articles/selected-article.html', false],
+        ['empty domain', 'selected-article', false, '', '/details', '/details/articles/selected-article.html', false],
+        // Artificial router output isolates whether the generated URL is escaped.
+        ['ampersand escaping of router output', 'selected-article', false, 'example.org', '/details?a=1&b=2', '/details?a=1&amp;b=2/articles/selected-article.html', false],
     ];
 
     foreach ($cases as [$name, $alias, $disableAlias, $domain, $pageUrl, $expectedUrl, $expectedTarget]) {
@@ -116,12 +128,7 @@ namespace {
         $page->domain = $domain;
         PageModel::$pages = [1 => new PageModel(1, '/'), 42 => $page];
 
-        $element = new class extends LinkTeaserElement {
-            public function handleArticle()
-            {
-                return parent::handleArticle();
-            }
-        };
+        $element = newElement();
         $element->setLink('More about %s');
 
         check(true, $element->handleArticle(), $name . ': link available');
@@ -132,10 +139,16 @@ namespace {
     }
 
     ArticleModel::$published = null;
+    $element = newElement();
     check(false, $element->handleArticle(), 'missing article');
+    check(null, $element->getHref(), 'missing article: no URL');
+    check(false, $element->target, 'missing article: no target');
     ArticleModel::$published = new ArticleModel();
     PageModel::$pages = [];
+    $element = newElement();
     check(false, $element->handleArticle(), 'missing parent page');
+    check(null, $element->getHref(), 'missing parent page: no URL');
+    check(false, $element->target, 'missing parent page: no target');
 
-    echo "PASS: 7 article link scenarios\n";
+    echo "PASS: 8 article link scenarios\n";
 }

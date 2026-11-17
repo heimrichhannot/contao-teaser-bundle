@@ -40,6 +40,9 @@
   "extra": {
     "contao-manager-plugin": "HeimrichHannot\\ContaoTeaserBundle\\ContaoManager\\Plugin"
   },
+  "scripts": {
+    "test": "@php tests/handle_article.php"
+  },
   "require-dev": {
     "rector/rector": "^2.0",
     "contao/contao-rector": "dev-main",
