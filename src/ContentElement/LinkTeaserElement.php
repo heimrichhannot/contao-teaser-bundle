@@ -395,9 +395,7 @@ class LinkTeaserElement extends ContentText
 
         $strParams = '/articles/' . ((!Config::get('disableAlias') && '' != $objArticle->alias) ? $objArticle->alias : $objArticle->id);
 
-        $rootPage = PageModel::findByPk($objTarget->rootId);
-
-        $this->setHref(StringUtil::ampersand($rootPage->getFrontendUrl($strParams)));
+        $this->setHref(StringUtil::ampersand($objTarget->getFrontendUrl($strParams)));
         $this->setTitle(sprintf($GLOBALS['TL_LANG']['MSC']['linkteaser']['articleTitle'], $objArticle->title));
         $this->setLink(sprintf($this->getLink(), $objArticle->title));
         $this->targetTitle = $objArticle->title;
