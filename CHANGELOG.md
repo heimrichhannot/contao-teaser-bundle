@@ -2,7 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- Added: article link regression tests and GitHub Actions workflow for PHP 8.1–8.5 ([#27](https://github.com/heimrichhannot/contao-teaser-bundle/pull/27))
 - Changed: allow doctrine/dbal 4 (`tablesExist()` takes an array)
+- Fixed: article teaser links pointing to the homepage instead of the selected article in Contao 5.7 ([#25](https://github.com/heimrichhannot/contao-teaser-bundle/issues/25), [#27](https://github.com/heimrichhannot/contao-teaser-bundle/pull/27))
 - Fixed: schema manager fallback for DBAL 2 and early DBAL 3 versions in the teaser module migration
 
 ## [2.3.1] - 2025-09-16
