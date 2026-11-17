@@ -6,7 +6,9 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Migration\MigrationInterface;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Exception\InvalidFieldNameException;
+use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use HeimrichHannot\ContaoTeaserBundle\ContentElement\LinkTeaserElement;
 
 class TeaserModuleMigration implements MigrationInterface
@@ -25,7 +27,7 @@ class TeaserModuleMigration implements MigrationInterface
 
     public function shouldRun(): bool
     {
-        $columns = $this->connection->createSchemaManager()->listTableColumns(ContentModel::getTable());
+        $columns = $this->getSchemaManager()->listTableColumns(ContentModel::getTable());
         if (!array_key_exists('articleid', $columns)) {
             return false;
         }
@@ -74,5 +76,20 @@ class TeaserModuleMigration implements MigrationInterface
         }
 
         return new MigrationResult(true, "Teaser Module Migration successfull. Migrated $elementCount elements.");
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function getSchemaManager(): AbstractSchemaManager
+    {
+        if (method_exists($this->connection, 'createSchemaManager')) {
+            $schemaManager = $this->connection->createSchemaManager();
+        } else {
+            /** @noinspection PhpDeprecationInspection */
+            $schemaManager = $this->connection->getSchemaManager();
+        }
+
+        return $schemaManager;
     }
 }

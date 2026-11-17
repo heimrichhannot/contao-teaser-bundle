@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+- Changed: allow doctrine/dbal 4 (`tablesExist()` takes an array)
+- Fixed: schema manager fallback for DBAL 2 and early DBAL 3 versions in the teaser module migration
+
 ## [2.3.1] - 2025-09-16
 - Fixed: exception with empty images
 
